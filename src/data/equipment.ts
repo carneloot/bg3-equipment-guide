@@ -1,4 +1,5 @@
 import catalogue from "./generated/equipment.json";
+import { equipmentGuidance } from "./equipment-guidance";
 
 type ImportedEquipmentItem = (typeof catalogue.items)[number];
 
@@ -11,18 +12,44 @@ export interface EquipmentItem {
   directions: string;
   effects: string;
   attributes: string;
+  warning?: string;
   image?: string;
   source: string;
 }
 
+export type ActId = 1 | 2 | 3;
+
+export interface EquipmentRouteRequirement {
+  id: string;
+  act: ActId;
+  action: string;
+  source: string;
+}
+
+export interface EquipmentGuidance {
+  directions?: string;
+  warning?: string;
+  requirements?: readonly EquipmentRouteRequirement[];
+}
+
+export interface EquipmentRequirement extends EquipmentRouteRequirement {
+  itemId: string;
+  itemName: string;
+  itemType: string;
+  itemRarity: string;
+  itemImage?: string;
+  obtainInAct: ActId;
+}
+
 export interface Act {
-  id: 1 | 2 | 3;
+  id: ActId;
   title: string;
   description: string;
   items: readonly EquipmentItem[];
+  requirements: readonly EquipmentRequirement[];
 }
 
-const actDetails: readonly Omit<Act, "items">[] = [
+const actDetails: readonly Omit<Act, "items" | "requirements">[] = [
   {
     id: 1,
     title: "The road to Moonrise",
@@ -127,9 +154,30 @@ const equipment = catalogue.items.flatMap((item): Array<EquipmentItem & { act: A
 export const acts: readonly Act[] = actDetails.map((act) => ({
   ...act,
   items: equipment.filter((item) => item.act === act.id),
+  requirements: [],
 }));
 
 export type EquipmentId = string;
+
+const knownIds = new Set(equipment.map((item) => item.id));
+const unknownGuidanceIds = Object.keys(equipmentGuidance).filter((id) => !knownIds.has(id));
+const requirementIds = Object.values(equipmentGuidance).flatMap(({ requirements = [] }) =>
+  requirements.map(({ id }) => id),
+);
+const invalidRequirements = Object.entries(equipmentGuidance).flatMap(([id, { requirements = [] }]) => {
+  const item = equipment.find((candidate) => candidate.id === id);
+  return requirements.filter(({ act }) => item !== undefined && act >= item.act).map(({ id }) => id);
+});
+
+if (unknownGuidanceIds.length > 0) {
+  throw new Error(`Guidance references unknown equipment IDs: ${unknownGuidanceIds.join(", ")}`);
+}
+if (new Set(requirementIds).size !== requirementIds.length) {
+  throw new Error("Equipment requirement IDs must not be repeated");
+}
+if (invalidRequirements.length > 0) {
+  throw new Error(`Equipment requirements must precede acquisition: ${invalidRequirements.join(", ")}`);
+}
 
 export const getActsForEquipment = (equipmentIds: readonly EquipmentId[]): Act[] => {
   const selectedIds = new Set(equipmentIds);
@@ -140,7 +188,35 @@ export const getActsForEquipment = (equipmentIds: readonly EquipmentId[]): Act[]
     throw new Error(`Unknown equipment IDs: ${unknownIds.join(", ")}`);
   }
 
+  const requirements = equipmentIds.flatMap((id): EquipmentRequirement[] => {
+    const item = equipment.find((candidate) => candidate.id === id);
+    if (!item) return [];
+
+    return (equipmentGuidance[id]?.requirements ?? []).map((requirement) => ({
+      ...requirement,
+      itemId: item.id,
+      itemName: item.name,
+      itemType: item.type,
+      itemRarity: item.rarity,
+      itemImage: item.image,
+      obtainInAct: item.act,
+    }));
+  });
+
   return acts
-    .map((act) => ({ ...act, items: act.items.filter((item) => selectedIds.has(item.id)) }))
-    .filter((act) => act.items.length > 0);
+    .map((act) => ({
+      ...act,
+      items: act.items
+        .filter((item) => selectedIds.has(item.id))
+        .map((item) => {
+          const guide = equipmentGuidance[item.id];
+          return {
+            ...item,
+            directions: guide?.directions ?? item.directions,
+            warning: guide?.warning,
+          };
+        }),
+      requirements: requirements.filter((requirement) => requirement.act === act.id),
+    }))
+    .filter((act) => act.items.length > 0 || act.requirements.length > 0);
 };

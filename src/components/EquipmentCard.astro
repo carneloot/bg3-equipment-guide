@@ -12,7 +12,7 @@ const searchText =
   `${item.name} ${item.type} ${item.location} ${item.directions} ${item.effects} ${item.attributes}`.toLowerCase();
 ---
 
-<article id={id} class="item-card" data-act={act} data-search={searchText}>
+<article id={id} class="item-card" data-act={act} data-route-card data-equipment-card data-search={searchText}>
   <div class="item-card__art">
     {item.image && <img src={item.image} alt="" width="144" height="144" loading="lazy" />}
     <label class="item-card__check" title={`Mark ${item.name} as collected`}>
@@ -38,6 +38,7 @@ const searchText =
       <span>{item.location}</span>
     </p>
     <p class="item-card__directions">{item.directions}</p>
+    {item.warning && <p class="item-card__warning">{item.warning}</p>}
     {item.effects && <p class="item-card__effects">{item.effects}</p>}
     <a class="item-card__source" href={item.source} target="_blank" rel="noreferrer">Check source ↗</a>
   </div>

@@ -961,6 +961,15 @@ h1 {
   white-space: pre-line;
 }
 
+.item-card__warning {
+  margin-bottom: 0.8rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid var(--red-bright);
+  color: #d5a49a;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 .item-card__effects {
   margin-bottom: 0.8rem;
   padding-left: 0.65rem;
@@ -969,6 +978,39 @@ h1 {
   font-size: 0.9rem;
   line-height: 1.35;
   white-space: pre-line;
+}
+
+.requirement-card {
+  border-color: #6c5938;
+  background:
+    linear-gradient(135deg, rgb(199 168 104 / 0.09), transparent 42%),
+    var(--surface);
+}
+
+.requirement-card .item-card__art {
+  background:
+    radial-gradient(circle at 50% 32%, rgb(199 168 104 / 0.2), transparent 55%),
+    rgb(0 0 0 / 0.08);
+}
+
+.requirement-card__acts {
+  position: absolute;
+  bottom: 1rem;
+  color: var(--gold-bright);
+  font: 600 0.72rem var(--serif-display);
+  letter-spacing: 0.12em;
+}
+
+.requirement-card__stage {
+  margin: 0 0 0.35rem;
+  color: var(--gold-bright);
+  font: 600 0.68rem var(--serif-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.requirement-card h3 {
+  margin-bottom: 0.65rem;
 }
 
 .item-card__source {

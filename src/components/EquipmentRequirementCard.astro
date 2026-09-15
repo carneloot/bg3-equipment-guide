@@ -1,0 +1,43 @@
+---
+import type { EquipmentRequirement } from "../data/equipment";
+
+interface Props {
+  requirement: EquipmentRequirement;
+}
+
+const { requirement }: Props = Astro.props;
+const roman = ["I", "II", "III"];
+const searchText =
+  `${requirement.itemName} ${requirement.itemType} ${requirement.action} prepare prerequisite`.toLowerCase();
+---
+
+<article
+  id={requirement.id}
+  class="item-card requirement-card"
+  data-act={requirement.act}
+  data-route-card
+  data-search={searchText}
+>
+  <div class="item-card__art">
+    {requirement.itemImage && (
+      <img src={requirement.itemImage} alt="" width="144" height="144" loading="lazy" />
+    )}
+    <span class="requirement-card__acts" aria-hidden="true">
+      {roman[requirement.act - 1]} → {roman[requirement.obtainInAct - 1]}
+    </span>
+  </div>
+  <div class="item-card__body">
+    <p class="item-card__meta">
+      <span class="rarity-dot" data-rarity={requirement.itemRarity}></span>
+      {requirement.itemRarity} · {requirement.itemType}
+    </p>
+    <p class="requirement-card__stage">
+      Prepare in Act {roman[requirement.act - 1]} · Obtain in Act {roman[requirement.obtainInAct - 1]}
+    </p>
+    <h3>{requirement.itemName}</h3>
+    <p class="item-card__directions">{requirement.action}</p>
+    <a class="item-card__source" href={requirement.source} target="_blank" rel="noreferrer">
+      Check prerequisite ↗
+    </a>
+  </div>
+</article>

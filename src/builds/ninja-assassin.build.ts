@@ -13,7 +13,7 @@ export default defineBuild({
   tags: ["Stealth", "Melee", "High mobility"],
   source: "https://www.youtube.com/watch?v=6QOYYllhg_w",
   sourceLabel: "Watch the source video",
-  updated: "2026-09-14",
+  updated: "2026-09-15",
   creation: [
     { label: "Race", value: "Wood Elf" },
     { label: "Background", value: "Charlatan" },

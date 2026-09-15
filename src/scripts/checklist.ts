@@ -1,7 +1,7 @@
 const buildId = document.body.dataset.buildId ?? "default";
 const storageKey =
   buildId === "ninja-assassin" ? "bg3-wayfarers-ledger-v1" : `bg3-wayfarers-ledger-${buildId}-v1`;
-const cards = [...document.querySelectorAll<HTMLElement>(".item-card")];
+const cards = [...document.querySelectorAll<HTMLElement>("[data-equipment-card]")];
 const checkboxes = [...document.querySelectorAll<HTMLInputElement>(".item-card__check input")];
 const filterButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-filter-act]")];
 const searchInput = document.querySelector<HTMLInputElement>("#search");
@@ -41,7 +41,7 @@ const applyFilters = () => {
     const isActiveAct = activeAct === "all" || section.dataset.sectionAct === activeAct;
     let visibleInSection = 0;
 
-    section.querySelectorAll<HTMLElement>(".item-card").forEach((card) => {
+    section.querySelectorAll<HTMLElement>("[data-route-card]").forEach((card) => {
       const matchesSearch = !query || card.dataset.search?.includes(query);
       card.hidden = !(isActiveAct && matchesSearch);
       if (!card.hidden) visibleInSection += 1;

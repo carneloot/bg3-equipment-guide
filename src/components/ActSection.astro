@@ -1,6 +1,7 @@
 ---
 import type { Act } from "../data/equipment";
 import EquipmentCard from "./EquipmentCard.astro";
+import EquipmentRequirementCard from "./EquipmentRequirementCard.astro";
 
 interface Props {
   act: Readonly<Act>;
@@ -8,6 +9,8 @@ interface Props {
 
 const { act }: Props = Astro.props;
 const roman = ["I", "II", "III"];
+const itemLabel = `${act.items.length} ${act.items.length === 1 ? "item" : "items"}`;
+const requirementLabel = `${act.requirements.length} ${act.requirements.length === 1 ? "preparation" : "preparations"}`;
 ---
 
 <section class="act-section" data-section-act={act.id} aria-labelledby={`act-${act.id}-title`}>
@@ -18,9 +21,12 @@ const roman = ["I", "II", "III"];
       <p>{act.description}</p>
     </div>
     <span class="act-header__rule" aria-hidden="true"></span>
-    <span class="act-header__count">{act.items.length} items</span>
+    <span class="act-header__count">
+      {itemLabel}{act.requirements.length > 0 && ` · ${requirementLabel}`}
+    </span>
   </header>
   <div class="item-grid">
+    {act.requirements.map((requirement) => <EquipmentRequirementCard requirement={requirement} />)}
     {act.items.map((item) => <EquipmentCard act={act.id} item={item} />)}
   </div>
 </section>

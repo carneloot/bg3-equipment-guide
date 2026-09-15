@@ -17,7 +17,7 @@ const roman = ["I", "II", "III"];
     </button>
     {acts.map((act) => (
       <button class="act-nav__button" type="button" data-filter-act={act.id} aria-pressed="false">
-        Act {roman[act.id - 1]} <span>{act.items.length}</span>
+        Act {roman[act.id - 1]} <span>{act.items.length + act.requirements.length}</span>
       </button>
     ))}
   </nav>

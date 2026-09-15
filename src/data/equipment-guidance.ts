@@ -1,6 +1,25 @@
 import type { EquipmentGuidance } from "./equipment";
 
 export const equipmentGuidance = {
+  "haste-helm": {
+    directions: "Open the locked Moss-Covered Chest beside the Blighted Village waypoint.",
+  },
+  "hide-armour-2": {
+    directions: "Buy it from Grat the Trader in the Goblin Camp. He sells it regardless of character level.",
+    warning: "Shop before the goblin camp becomes hostile.",
+  },
+  "crusher-s-ring": {
+    directions:
+      "Find Crusher in the Goblin Camp courtyard. Loot the ring from him, steal it by kissing his foot, or pass the intimidation checks and kill him after he walks to the bridge.",
+    warning: "Do not leave the camp without taking the ring from Crusher.",
+  },
+  "phalar-aluve": {
+    directions:
+      "Find the sword embedded in stone near the Selûnite Outpost. Pass the Strength or Religion check to draw it; a drow can instead offer blood without a check.",
+  },
+  "gloves-of-the-growling-underdog": {
+    directions: "Take them from Dror Ragzlin's locked treasure crates behind the iron gate in the Shattered Sanctum.",
+  },
   "ring-of-protection": {
     directions:
       "Earn Mol's trust, accept Steal the Sacred Idol, then give her the Idol of Silvanus. The ring is the quest reward.",
@@ -15,6 +34,14 @@ export const equipmentGuidance = {
     directions: "Loot them from True Soul Nere after dealing with him at the cave-in.",
     warning: "Do not leave Grymforge without looting Nere.",
   },
+  "gloves-of-dexterity": {
+    directions: "Buy them from quartermaster A'jak'nir Jeera inside the crèche.",
+    warning: "Shop before your choices in the crèche turn its inhabitants hostile.",
+  },
+  "larethian-s-wrath": {
+    directions: "Buy it from quartermaster A'jak'nir Jeera inside the crèche.",
+    warning: "Shop before your choices in the crèche turn its inhabitants hostile.",
+  },
   "the-graceful-cloth": {
     directions:
       "Buy it from Lady Esther, northeast of the Trielta Crags waypoint in the Mountain Pass.",
@@ -26,6 +53,21 @@ export const equipmentGuidance = {
   "cloak-of-protection": {
     directions: "Buy it from Quartermaster Talli near the waypoint.",
     warning: "Shop while Last Light Inn is safe and Talli is available.",
+  },
+  "yuan-ti-scale-mail": {
+    directions: "Buy it from Quartermaster Talli near the Last Light Inn waypoint.",
+    warning: "Shop while Last Light Inn is safe and Talli is available.",
+  },
+  "risky-ring": {
+    directions: "Buy it from Araj Oblodra on the main floor before the assault on Moonrise.",
+    warning:
+      "Fallback: if Araj survives and you miss it here, she can sell it at Crimson Draughts in the Lower City during Act III.",
+  },
+  "helmet-of-arcane-acuity": {
+    directions: "Open the locked and trapped Gilded Chest in the secret basement beneath the Mason's Guild.",
+  },
+  "callous-glow-ring": {
+    directions: "Open the opulent chest in the vault room near Balthazar's chamber in the Gauntlet of Shar.",
   },
   "sword-of-life-stealing": {
     directions: "Buy it from Dammon at the forge.",
@@ -50,6 +92,11 @@ export const equipmentGuidance = {
       "Complete the Self-Same Trial. Pick up the ring where the player character's shadow copy fell, near the brazier.",
     warning:
       "It lies loose on the ground and is easy to miss. A shadow defeated with Control Undead does not drop it.",
+  },
+  "shar-s-spear-of-evening": {
+    directions:
+      "Bring Shadowheart and the Spear of Night into the Shadowfell. Let Shadowheart kill the Nightsong; Shar rewards her with the spear when the party leaves.",
+    warning: "This outcome kills the Nightsong and permanently commits Shadowheart to Shar's path.",
   },
   "boots-of-uninhibited-kushigo": {
     directions:
@@ -82,6 +129,33 @@ export const equipmentGuidance = {
     directions:
       "Enter Jaheira's basement, open the locked bookcase with a DC 18 Sleight of Hand check, and take the amulet from the display case beyond it.",
     warning: "The amulet is present even if Jaheira was not recruited or has died.",
+  },
+  "hellrider-longbow": {
+    directions: "Buy it from Ferg Drogher near the Requisitioned Barn in Rivington.",
+    warning:
+      "If Shadowheart is nearby, Ferg only trades when she killed the Nightsong. Leave Shadowheart at camp if you did not follow that path.",
+    requirements: [
+      {
+        id: "resolve-ferg-shadowheart-trade",
+        act: 2,
+        action:
+          "For Ferg to trade while Shadowheart is nearby in Act III, let Shadowheart kill the Nightsong. Otherwise, plan to approach Ferg without Shadowheart.",
+        source: "https://bg3.wiki/wiki/Hellrider_Longbow",
+      },
+    ],
+  },
+  "band-of-the-mystic-scoundrel": {
+    directions:
+      "Expose Akabi's rigged game at the Circus of the Last Days. In the jungle, climb the southern ledges and take the ring from the backpack near the overlook.",
+    warning: "Collect it before using the portal out of the jungle; you cannot return.",
+  },
+  "cloak-of-the-weave": {
+    directions:
+      "At the Devil's Fee, reveal Helsik's genuine infernal wares through dialogue to unlock her special stock, then buy the cloak.",
+  },
+  "bhaalist-armour": {
+    directions: "Become an Unholy Assassin at the Murder Tribunal, then buy it from the Echo of Abazigal.",
+    warning: "Becoming an Unholy Assassin requires killing Valeria during the tribunal.",
   },
   "shade-slayer-cloak": {
     directions:

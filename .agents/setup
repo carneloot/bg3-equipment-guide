@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+started_at=$SECONDS
+echo "[orb setup] Checking Node.js and pnpm"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "[orb setup] Node.js 22 or newer is required" >&2
+  exit 1
+fi
+
+node_major=$(node -p "Number(process.versions.node.split('.')[0])")
+if ((node_major < 22)); then
+  echo "[orb setup] Node.js 22 or newer is required; found $(node --version)" >&2
+  exit 1
+fi
+
+if ! command -v pnpm >/dev/null 2>&1 || [[ "$(pnpm --version)" != "12.0.0" ]]; then
+  echo "[orb setup] Installing pnpm 12.0.0"
+  npm install --global pnpm@12.0.0
+fi
+
+echo "[orb setup] Installing dependencies from pnpm-lock.yaml"
+install_started_at=$SECONDS
+pnpm install --frozen-lockfile
+echo "[orb setup] Dependencies ready in $((SECONDS - install_started_at))s"
+echo "[orb setup] Complete in $((SECONDS - started_at))s"

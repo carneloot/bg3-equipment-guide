@@ -1,4 +1,6 @@
-const storageKey = "bg3-wayfarers-ledger-v1";
+const buildId = document.body.dataset.buildId ?? "default";
+const storageKey =
+  buildId === "ninja-assassin" ? "bg3-wayfarers-ledger-v1" : `bg3-wayfarers-ledger-${buildId}-v1`;
 const cards = [...document.querySelectorAll<HTMLElement>(".item-card")];
 const checkboxes = [...document.querySelectorAll<HTMLInputElement>(".item-card__check input")];
 const filterButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-filter-act]")];

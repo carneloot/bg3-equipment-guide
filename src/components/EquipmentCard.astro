@@ -1,5 +1,5 @@
 ---
-import { getEquipmentId, type EquipmentItem } from "../data/equipment";
+import type { EquipmentItem } from "../data/equipment";
 
 interface Props {
   act: number;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { act, item }: Props = Astro.props;
-const id = getEquipmentId(item.name);
+const id = item.id;
 const searchText = `${item.name} ${item.type} ${item.location} ${item.directions}`.toLowerCase();
 ---
 

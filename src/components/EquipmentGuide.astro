@@ -3,7 +3,7 @@ import type { Act } from "../data/equipment";
 import ActSection from "./ActSection.astro";
 
 interface Props {
-  acts: Act[];
+  acts: readonly Act[];
 }
 
 const { acts }: Props = Astro.props;

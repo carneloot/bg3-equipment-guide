@@ -1,8 +1,28 @@
 # The Wayfarer's Ledger
 
-An Astro-based Baldur's Gate 3 Ninja Assassin build guide and equipment checklist, organized by act.
+An Astro-based collection of Baldur's Gate 3 build guides and equipment checklists.
 
-The quick build guide condenses ItalianSpartacus's [Ultimate Ninja Assassin (Shadow Monk)](https://www.youtube.com/watch?v=6QOYYllhg_w) video into the choices needed while playing.
+## Add a build
+
+Add one `*.build.ts` module to `src/builds/`. The registry discovers it automatically, publishes its `id` at `/builds/{id}/`, and adds it to the home page.
+
+Copy `ninja-assassin.build.ts` as the starting template and wrap the definition with `defineBuild()`. Its Valibot schema checks every required field and infers the TypeScript type, including autocompletion for shared equipment IDs. The build also validates IDs, dates, ability scores, duplicate equipment, all 12 character levels, and loadout coverage when imported.
+
+Equipment details and images are shared. Add an item once to `src/data/equipment.ts`, then reference its explicit ID from any build:
+
+```ts
+import { defineBuild } from "./define-build";
+
+export default defineBuild({
+  id: "storm-sorcerer",
+  title: "Storm Sorcerer",
+  // See ninja-assassin.build.ts for the remaining fields.
+  loadout: [{ slot: "Main hand", item: "the-spellsparkler" }],
+  equipment: ["the-spellsparkler", "protecty-sparkswall"],
+});
+```
+
+Set `draft: true` to keep an unfinished build out of the index and production routes.
 
 ## Development
 

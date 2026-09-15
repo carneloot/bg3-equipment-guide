@@ -1,4 +1,5 @@
 export interface EquipmentItem {
+  id: string;
   name: string;
   type: string;
   rarity: "uncommon" | "rare" | "very rare" | "legendary";
@@ -13,19 +14,17 @@ export interface Act {
   id: 1 | 2 | 3;
   title: string;
   description: string;
-  items: EquipmentItem[];
+  items: readonly EquipmentItem[];
 }
 
-export const getEquipmentId = (name: string) =>
-  name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-
-export const acts: Act[] = [
+export const acts = [
   {
     id: 1,
     title: "The road to Moonrise",
     description: "Wilderness, Underdark, and the Mountain Pass",
     items: [
       {
+        id: "ring-of-protection",
         name: "Ring of Protection",
         type: "Ring",
         rarity: "rare",
@@ -38,6 +37,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Ring_of_Protection",
       },
       {
+        id: "smuggler-s-ring",
         name: "Smuggler's Ring",
         type: "Ring",
         rarity: "uncommon",
@@ -48,6 +48,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Smuggler%27s_Ring",
       },
       {
+        id: "disintegrating-night-walkers",
         name: "Disintegrating Night Walkers",
         type: "Boots",
         rarity: "very rare",
@@ -58,6 +59,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Disintegrating_Night_Walkers",
       },
       {
+        id: "the-graceful-cloth",
         name: "The Graceful Cloth",
         type: "Clothing",
         rarity: "rare",
@@ -68,6 +70,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/The_Graceful_Cloth",
       },
       {
+        id: "knife-of-the-undermountain-king",
         name: "Knife of the Undermountain King",
         type: "Shortsword",
         rarity: "very rare",
@@ -85,6 +88,7 @@ export const acts: Act[] = [
     description: "Last Light Inn, Moonrise Towers, and the Gauntlet of Shar",
     items: [
       {
+        id: "cloak-of-protection",
         name: "Cloak of Protection",
         type: "Cloak",
         rarity: "uncommon",
@@ -95,6 +99,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Cloak_of_Protection",
       },
       {
+        id: "sword-of-life-stealing",
         name: "Sword of Life Stealing",
         type: "Shortsword",
         rarity: "very rare",
@@ -105,6 +110,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Sword_of_Life_Stealing",
       },
       {
+        id: "ring-of-free-action",
         name: "Ring of Free Action",
         type: "Ring",
         rarity: "rare",
@@ -116,6 +122,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Ring_of_Free_Action",
       },
       {
+        id: "killer-s-sweetheart",
         name: "Killer's Sweetheart",
         type: "Ring",
         rarity: "very rare",
@@ -135,6 +142,7 @@ export const acts: Act[] = [
     description: "Rivington, the Lower City, and the places beneath",
     items: [
       {
+        id: "boots-of-uninhibited-kushigo",
         name: "Boots of Uninhibited Kushigo",
         type: "Boots",
         rarity: "rare",
@@ -146,6 +154,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Boots_of_Uninhibited_Kushigo",
       },
       {
+        id: "bonespike-boots",
         name: "Bonespike Boots",
         type: "Boots",
         rarity: "very rare",
@@ -156,6 +165,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Bonespike_Boots",
       },
       {
+        id: "stalker-gloves",
         name: "Stalker Gloves",
         type: "Gloves",
         rarity: "rare",
@@ -165,6 +175,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Stalker_Gloves",
       },
       {
+        id: "sentient-amulet-very-rare",
         name: "Sentient Amulet (Very Rare)",
         type: "Amulet",
         rarity: "very rare",
@@ -177,6 +188,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Sentient_Amulet_(Very_Rare)",
       },
       {
+        id: "khalid-s-gift",
         name: "Khalid's Gift",
         type: "Amulet",
         rarity: "very rare",
@@ -188,6 +200,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Khalid%27s_Gift",
       },
       {
+        id: "shade-slayer-cloak",
         name: "Shade-Slayer Cloak",
         type: "Cloak",
         rarity: "very rare",
@@ -198,6 +211,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Shade-Slayer_Cloak",
       },
       {
+        id: "mask-of-soul-perception",
         name: "Mask of Soul Perception",
         type: "Helmet",
         rarity: "very rare",
@@ -208,6 +222,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Mask_of_Soul_Perception",
       },
       {
+        id: "vest-of-soul-rejuvenation",
         name: "Vest of Soul Rejuvenation",
         type: "Clothing",
         rarity: "very rare",
@@ -218,6 +233,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Vest_of_Soul_Rejuvenation",
       },
       {
+        id: "the-dead-shot",
         name: "The Dead Shot",
         type: "Longbow",
         rarity: "very rare",
@@ -228,6 +244,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/The_Dead_Shot",
       },
       {
+        id: "helldusk-gloves",
         name: "Helldusk Gloves",
         type: "Gloves",
         rarity: "very rare",
@@ -238,6 +255,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Helldusk_Gloves",
       },
       {
+        id: "helldusk-helmet",
         name: "Helldusk Helmet",
         type: "Helmet",
         rarity: "very rare",
@@ -248,6 +266,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Helldusk_Helmet",
       },
       {
+        id: "gloves-of-soul-catching",
         name: "Gloves of Soul Catching",
         type: "Gloves",
         rarity: "legendary",
@@ -259,6 +278,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Gloves_of_Soul_Catching",
       },
       {
+        id: "bonespike-gloves",
         name: "Bonespike Gloves",
         type: "Gloves",
         rarity: "very rare",
@@ -270,6 +290,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Bonespike_Gloves",
       },
       {
+        id: "crimson-mischief",
         name: "Crimson Mischief",
         type: "Shortsword",
         rarity: "legendary",
@@ -279,6 +300,7 @@ export const acts: Act[] = [
         source: "https://bg3.wiki/wiki/Crimson_Mischief",
       },
       {
+        id: "bloodthirst",
         name: "Bloodthirst",
         type: "Dagger",
         rarity: "legendary",
@@ -289,6 +311,20 @@ export const acts: Act[] = [
       },
     ],
   },
-];
+] as const satisfies readonly Act[];
 
-export const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
+export type EquipmentId = (typeof acts)[number]["items"][number]["id"];
+
+export const getActsForEquipment = (equipmentIds: readonly EquipmentId[]): Act[] => {
+  const selectedIds = new Set(equipmentIds);
+  const knownIds = new Set(acts.flatMap((act) => act.items.map((item) => item.id)));
+  const unknownIds = equipmentIds.filter((id) => !knownIds.has(id));
+
+  if (unknownIds.length > 0) {
+    throw new Error(`Unknown equipment IDs: ${unknownIds.join(", ")}`);
+  }
+
+  return acts
+    .map((act) => ({ ...act, items: act.items.filter((item) => selectedIds.has(item.id)) }))
+    .filter((act) => act.items.length > 0);
+};

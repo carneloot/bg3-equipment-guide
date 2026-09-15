@@ -1,29 +1,26 @@
 ---
 interface Props {
   totalItems: number;
+  description: string;
+  source?: string;
+  sourceLabel?: string;
 }
 
-const { totalItems }: Props = Astro.props;
+const { totalItems, description, source, sourceLabel }: Props = Astro.props;
 ---
 
 <header class="hero">
   <div class="hero__texture" aria-hidden="true"></div>
   <div class="hero__inner">
+    <a class="hero__back" href="/">← All builds</a>
     <p class="eyebrow">A Baldur's Gate III field guide</p>
     <h1>The Wayfarer's Ledger</h1>
-    <p class="hero__lede">
-      A quick Ninja Assassin leveling guide and a checklist for twenty-four items across all three acts.
-    </p>
+    <p class="hero__lede">{description}</p>
 
     <nav class="hero__actions" aria-label="Guide sections">
       <a class="hero__action hero__action--primary" href="#build">Read the build</a>
       <a class="hero__action" href="#equipment">Open equipment route</a>
-      <a
-        class="hero__source"
-        href="https://www.youtube.com/watch?v=6QOYYllhg_w"
-        target="_blank"
-        rel="noreferrer">Watch the source video ↗</a
-      >
+      {source && <a class="hero__source" href={source} target="_blank" rel="noreferrer">{sourceLabel ?? "Source"} ↗</a>}
     </nav>
 
     <div class="progress-panel" aria-label="Collection progress">

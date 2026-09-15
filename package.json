@@ -11,7 +11,8 @@
     "destroy": "alchemy destroy"
   },
   "dependencies": {
-    "astro": "^7.3.2"
+    "astro": "^7.3.2",
+    "valibot": "^1.2.0"
   },
   "devDependencies": {
     "@alchemy.run/frontend-frameworks": "2.0.0-beta.77",

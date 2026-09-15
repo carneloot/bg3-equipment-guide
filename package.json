@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "sync:equipment": "node scripts/sync-equipment.ts",
+    "test:equipment-sync": "node --test scripts/sync-equipment.test.ts",
     "preview": "astro preview",
     "deploy": "alchemy deploy",
     "destroy": "alchemy destroy"
@@ -24,7 +26,7 @@
     "typescript": "^5.9.2"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "packageManager": "pnpm@12.0.0"
 }

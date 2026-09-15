@@ -8,12 +8,13 @@ interface Props {
 
 const { act, item }: Props = Astro.props;
 const id = item.id;
-const searchText = `${item.name} ${item.type} ${item.location} ${item.directions}`.toLowerCase();
+const searchText =
+  `${item.name} ${item.type} ${item.location} ${item.directions} ${item.effects} ${item.attributes}`.toLowerCase();
 ---
 
 <article id={id} class="item-card" data-act={act} data-search={searchText}>
   <div class="item-card__art">
-    <img src={`/${item.image}`} alt="" width="144" height="144" loading="lazy" />
+    {item.image && <img src={item.image} alt="" width="144" height="144" loading="lazy" />}
     <label class="item-card__check" title={`Mark ${item.name} as collected`}>
       <span class="sr-only">Mark {item.name} as collected</span>
       <input type="checkbox" data-item-id={id} />
@@ -28,6 +29,7 @@ const searchText = `${item.name} ${item.type} ${item.location} ${item.directions
       {item.rarity} · {item.type}
     </p>
     <h3>{item.name}</h3>
+    {item.attributes && <p class="item-card__attributes">{item.attributes}</p>}
     <p class="item-card__location">
       <svg aria-hidden="true" viewBox="0 0 24 24">
         <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
@@ -36,7 +38,7 @@ const searchText = `${item.name} ${item.type} ${item.location} ${item.directions
       <span>{item.location}</span>
     </p>
     <p class="item-card__directions">{item.directions}</p>
-    {item.warning && <p class="item-card__warning">{item.warning}</p>}
+    {item.effects && <p class="item-card__effects">{item.effects}</p>}
     <a class="item-card__source" href={item.source} target="_blank" rel="noreferrer">Check source ↗</a>
   </div>
 </article>

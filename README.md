@@ -33,6 +33,25 @@ pnpm dev
 
 Run `pnpm build` to type-check and build the static site.
 
+## Equipment data
+
+The site reads its equipment catalogue from `src/data/generated/equipment.json`. The catalogue imports
+non-legacy equipment and weapons with acquisition data from [BG3 Wiki](https://bg3.wiki/), including
+effects, attributes, acquisition details, act availability where it can be determined, and image URLs.
+
+Refresh the catalogue locally:
+
+```sh
+pnpm sync:equipment
+```
+
+The **Refresh equipment catalogue** GitHub Actions workflow runs the same command, builds the site, and
+commits the generated JSON to the selected branch when the data changes. Run the workflow manually from
+the repository's **Actions** page.
+
+BG3 Wiki content has reuse requirements. Keep the source links and review the
+[BG3 Wiki copyright policy](https://bg3.wiki/wiki/bg3wiki:Copyrights) before redistributing the data.
+
 ## Deployment
 
 Pushes to `main` deploy [bg3.carneloot.com](https://bg3.carneloot.com) through Alchemy in GitHub Actions after a successful build. The `production` environment needs the `OP_SERVICE_ACCOUNT_TOKEN` secret for a 1Password service account with access to:

@@ -63,7 +63,7 @@ const loadout = build.loadout.map(({ slot, item: itemId, displayName }) => {
         <li>
           <a class="loadout-item" href={`#${item.id}`}>
             <span class="loadout-item__art">
-              <img src={`/${item.image}`} alt="" width="72" height="72" loading="lazy" />
+              {item.image && <img src={item.image} alt="" width="72" height="72" loading="lazy" />}
             </span>
             <span class="loadout-item__copy">
               <span class="loadout-item__slot">{slot}</span>

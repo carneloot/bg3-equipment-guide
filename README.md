@@ -24,3 +24,7 @@ Pushes to `main` deploy [bg3.carneloot.com](https://bg3.carneloot.com) through A
 The workflow verifies the production URL and restores the previous Worker deployment if the health check fails.
 
 Location details and item images were checked against the linked [BG3 Wiki](https://bg3.wiki/) pages on September 14, 2026.
+
+## Reference
+
+[Original Amp project thread](https://ampcode.com/threads/T-01a09df8-b30e-7258-a1d0-8f9435121ecc)

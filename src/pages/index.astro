@@ -1,0 +1,40 @@
+---
+import BuildGuide from "../components/BuildGuide.astro";
+import EquipmentGuide from "../components/EquipmentGuide.astro";
+import EquipmentToolbar from "../components/EquipmentToolbar.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import { acts, totalItems } from "../data/equipment";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17130f" />
+    <meta
+      name="description"
+      content="A written Ninja Assassin build and spoiler-conscious equipment checklist for Baldur's Gate 3."
+    />
+    <title>The Wayfarer's Ledger | BG3 Ninja Assassin guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="../scripts/checklist.ts"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#build">Skip to build guide</a>
+    <Hero totalItems={totalItems} />
+    <main id="guide-content">
+      <BuildGuide />
+      <EquipmentToolbar acts={acts} totalItems={totalItems} />
+      <EquipmentGuide acts={acts} />
+    </main>
+    <Footer />
+  </body>
+</html>

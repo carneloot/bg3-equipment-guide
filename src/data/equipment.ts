@@ -1,4 +1,22 @@
-const acts = [
+export interface EquipmentItem {
+  name: string;
+  type: string;
+  rarity: "uncommon" | "rare" | "very rare" | "legendary";
+  location: string;
+  directions: string;
+  warning?: string;
+  image: string;
+  source: string;
+}
+
+export interface Act {
+  id: 1 | 2 | 3;
+  title: string;
+  description: string;
+  items: EquipmentItem[];
+}
+
+export const acts: Act[] = [
   {
     id: 1,
     title: "The road to Moonrise",
@@ -270,171 +288,4 @@ const acts = [
   },
 ];
 
-const storageKey = "bg3-wayfarers-ledger-v1";
-const sectionsRoot = document.querySelector("#act-sections");
-const searchInput = document.querySelector("#search");
-const filterButtons = [...document.querySelectorAll("[data-act]")];
-const emptyState = document.querySelector("#empty-state");
-const progressBar = document.querySelector(".progress-track");
-const progressFill = document.querySelector("#progress-fill");
-const collectedCount = document.querySelector("#collected-count");
-const resetButton = document.querySelector("#reset-progress");
-
-const slugify = (value) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-
-const loadCollected = () => {
-  try {
-    return new Set(JSON.parse(localStorage.getItem(storageKey)) || []);
-  } catch {
-    return new Set();
-  }
-};
-
-let collected = loadCollected();
-let activeAct = "all";
-
-const locationIcon = `
-  <svg aria-hidden="true" viewBox="0 0 24 24">
-    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
-    <circle cx="12" cy="10" r="2.5"></circle>
-  </svg>`;
-
-const checkIcon = `
-  <svg aria-hidden="true" viewBox="0 0 20 20">
-    <path d="m4 10.5 3.6 3.6L16 5.8"></path>
-  </svg>`;
-
-const render = () => {
-  sectionsRoot.innerHTML = acts
-    .map(
-      (act) => `
-        <section class="act-section" data-section-act="${act.id}" aria-labelledby="act-${act.id}-title">
-          <header class="act-header">
-            <span class="act-header__number" aria-hidden="true">${String(act.id).padStart(2, "0")}</span>
-            <div class="act-header__copy">
-              <h2 id="act-${act.id}-title">Act ${["I", "II", "III"][act.id - 1]} · ${act.title}</h2>
-              <p>${act.description}</p>
-            </div>
-            <span class="act-header__rule" aria-hidden="true"></span>
-            <span class="act-header__count">${act.items.length} items</span>
-          </header>
-          <div class="item-grid">
-            ${act.items.map((item) => renderCard(item, act.id)).join("")}
-          </div>
-        </section>`,
-    )
-    .join("");
-
-  document.querySelectorAll(".item-card__check input").forEach((checkbox) => {
-    checkbox.addEventListener("change", handleCheck);
-  });
-};
-
-const renderCard = (item, act) => {
-  const id = slugify(item.name);
-  const isCollected = collected.has(id);
-  const searchText = `${item.name} ${item.type} ${item.location} ${item.directions}`.toLowerCase();
-
-  return `
-    <article class="item-card${isCollected ? " is-collected" : ""}" data-act="${act}" data-search="${searchText}">
-      <div class="item-card__art">
-        <img src="${item.image}" alt="" width="144" height="144" loading="lazy" />
-        <label class="item-card__check" title="Mark ${item.name} as collected">
-          <span class="sr-only">Mark ${item.name} as collected</span>
-          <input type="checkbox" data-item-id="${id}" ${isCollected ? "checked" : ""} />
-          <span class="item-card__checkbox">${checkIcon}</span>
-        </label>
-      </div>
-      <div class="item-card__body">
-        <p class="item-card__meta">
-          <span class="rarity-dot" data-rarity="${item.rarity}"></span>
-          ${item.rarity} · ${item.type}
-        </p>
-        <h3>${item.name}</h3>
-        <p class="item-card__location">${locationIcon}<span>${item.location}</span></p>
-        <p class="item-card__directions">${item.directions}</p>
-        ${item.warning ? `<p class="item-card__warning">${item.warning}</p>` : ""}
-        <a class="item-card__source" href="${item.source}" target="_blank" rel="noreferrer">Check source ↗</a>
-      </div>
-    </article>`;
-};
-
-const handleCheck = (event) => {
-  const checkbox = event.currentTarget;
-  const card = checkbox.closest(".item-card");
-
-  if (checkbox.checked) {
-    collected.add(checkbox.dataset.itemId);
-  } else {
-    collected.delete(checkbox.dataset.itemId);
-  }
-
-  card.classList.toggle("is-collected", checkbox.checked);
-  localStorage.setItem(storageKey, JSON.stringify([...collected]));
-  updateProgress();
-};
-
-const updateProgress = () => {
-  const total = acts.reduce((sum, act) => sum + act.items.length, 0);
-  const count = collected.size;
-  const percentage = (count / total) * 100;
-
-  collectedCount.textContent = count;
-  progressFill.style.width = `${percentage}%`;
-  progressBar.setAttribute("aria-valuenow", count);
-};
-
-const applyFilters = () => {
-  const query = searchInput.value.trim().toLowerCase();
-  let visibleCards = 0;
-
-  document.querySelectorAll(".act-section").forEach((section) => {
-    const isActiveAct = activeAct === "all" || section.dataset.sectionAct === activeAct;
-    let visibleInSection = 0;
-
-    section.querySelectorAll(".item-card").forEach((card) => {
-      const matchesSearch = !query || card.dataset.search.includes(query);
-      const isVisible = isActiveAct && matchesSearch;
-      card.hidden = !isVisible;
-      if (isVisible) visibleInSection += 1;
-    });
-
-    section.hidden = visibleInSection === 0;
-    visibleCards += visibleInSection;
-  });
-
-  emptyState.hidden = visibleCards !== 0;
-};
-
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    activeAct = button.dataset.act;
-    filterButtons.forEach((candidate) => {
-      const isActive = candidate === button;
-      candidate.classList.toggle("is-active", isActive);
-      candidate.setAttribute("aria-pressed", String(isActive));
-    });
-    applyFilters();
-  });
-});
-
-searchInput.addEventListener("input", applyFilters);
-
-resetButton.addEventListener("click", () => {
-  if (collected.size === 0 || !window.confirm("Clear every collected check?")) return;
-
-  collected = new Set();
-  localStorage.removeItem(storageKey);
-  document.querySelectorAll(".item-card__check input").forEach((checkbox) => {
-    checkbox.checked = false;
-    checkbox.closest(".item-card").classList.remove("is-collected");
-  });
-  updateProgress();
-});
-
-render();
-updateProgress();
+export const totalItems = acts.reduce((total, act) => total + act.items.length, 0);

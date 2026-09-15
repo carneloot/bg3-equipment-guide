@@ -1,0 +1,26 @@
+---
+import type { Act } from "../data/equipment";
+import EquipmentCard from "./EquipmentCard.astro";
+
+interface Props {
+  act: Act;
+}
+
+const { act }: Props = Astro.props;
+const roman = ["I", "II", "III"];
+---
+
+<section class="act-section" data-section-act={act.id} aria-labelledby={`act-${act.id}-title`}>
+  <header class="act-header">
+    <span class="act-header__number" aria-hidden="true">{String(act.id).padStart(2, "0")}</span>
+    <div class="act-header__copy">
+      <h2 id={`act-${act.id}-title`}>Act {roman[act.id - 1]} · {act.title}</h2>
+      <p>{act.description}</p>
+    </div>
+    <span class="act-header__rule" aria-hidden="true"></span>
+    <span class="act-header__count">{act.items.length} items</span>
+  </header>
+  <div class="item-grid">
+    {act.items.map((item) => <EquipmentCard act={act.id} item={item} />)}
+  </div>
+</section>

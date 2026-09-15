@@ -1,0 +1,91 @@
+---
+const levels = [
+  { classLevel: "Monk 1", choice: "Martial Arts, Flurry of Blows" },
+  { classLevel: "Monk 2", choice: "Patient Defence, Step of the Wind" },
+  { classLevel: "Monk 3", choice: "Choose ", emphasis: "Way of Shadow" },
+  { classLevel: "Monk 4", emphasis: "Feat: +2 DEX" },
+  { classLevel: "Monk 5", choice: "Extra Attack, Stunning Strike" },
+  { classLevel: "Monk 6", choice: "Shadow Step" },
+  { classLevel: "Monk 7", choice: "Evasion, Stillness of Mind" },
+  { classLevel: "Rogue 1", choice: "Sneak Attack, Expertise" },
+  { classLevel: "Rogue 2", choice: "Cunning Actions" },
+  { classLevel: "Rogue 3", choice: "Choose ", emphasis: "Assassin" },
+  { classLevel: "Rogue 4", emphasis: "Feat: Savage Attacker" },
+  { classLevel: "Rogue 5", choice: "Uncanny Dodge, Sneak Attack 3d6" },
+];
+
+const abilities = [
+  ["STR", 8],
+  ["DEX", 17],
+  ["CON", 14],
+  ["INT", 8],
+  ["WIS", 16],
+  ["CHA", 10],
+];
+---
+
+<section id="build" class="build-guide" tabindex="-1" aria-labelledby="build-title">
+  <header class="build-intro">
+    <div>
+      <p class="section-kicker">Quick build guide</p>
+      <h2 id="build-title">Ninja Assassin</h2>
+      <p>Follow this while leveling. The final split is Way of Shadow Monk 7 / Assassin Rogue 5.</p>
+    </div>
+    <a href="https://www.youtube.com/watch?v=6QOYYllhg_w" target="_blank" rel="noreferrer"
+      >Source video ↗</a
+    >
+  </header>
+
+  <div class="build-dashboard">
+    <section class="build-card" aria-labelledby="creation-title">
+      <p class="build-card__label" id="creation-title">Character creation</p>
+      <dl class="fact-list">
+        <div><dt>Race</dt><dd>Wood Elf</dd></div>
+        <div><dt>Background</dt><dd>Charlatan</dd></div>
+        <div><dt>Start</dt><dd>Monk</dd></div>
+      </dl>
+      <div class="ability-grid" aria-label="Starting ability scores">
+        {abilities.map(([name, value]) => (
+          <div class:list={{ "is-primary": name === "DEX" }}><span>{name}</span><strong>{value}</strong></div>
+        ))}
+      </div>
+      <p class="build-note"><strong>Bonuses:</strong> +2 DEX, +1 WIS. Use Auntie Ethel's Hair for +1 DEX.</p>
+      <p class="build-note"><strong>Skills:</strong> Insight. Later, take Expertise in Stealth and Sleight of Hand.</p>
+    </section>
+
+    <section class="build-card" aria-labelledby="combat-title">
+      <p class="build-card__label" id="combat-title">Combat loop</p>
+      <ol class="combat-list">
+        <li>Start fights from stealth to trigger Surprise.</li>
+        <li>Shadow Step for Advantage, then use Sneak Attack.</li>
+        <li>Use Stunning Strike on threats. Hide or teleport out.</li>
+      </ol>
+      <p class="build-card__label loadout-label">Level 12 loadout</p>
+      <p class="loadout-summary">
+        <strong>Bloodthirst</strong> main hand · <strong>Crimson Mischief</strong> off-hand ·{" "}
+        <strong>The Dead Shot</strong> · Mask of Soul Perception · Shade-Slayer Cloak · Vest of Soul
+        Rejuvenation · Bonespike Gloves · Disintegrating Night Walkers or Bonespike Boots · Sentient
+        Amulet · Killer's Sweetheart · Ring of Free Action
+      </p>
+    </section>
+  </div>
+
+  <section class="level-section" aria-labelledby="levels-title">
+    <div class="level-section__heading">
+      <div>
+        <p class="section-kicker">Level by level</p>
+        <h3 id="levels-title">What to pick</h3>
+      </div>
+      <p>Take Monk through level 7, then switch to Rogue.</p>
+    </div>
+    <ol class="level-path">
+      {levels.map(({ classLevel, choice, emphasis }, index) => (
+        <li class:list={{ "level-step--rogue": index >= 7 }}>
+          <span>{index + 1}</span>
+          <strong>{classLevel}</strong>
+          <p>{choice}{emphasis && <b>{emphasis}</b>}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+</section>

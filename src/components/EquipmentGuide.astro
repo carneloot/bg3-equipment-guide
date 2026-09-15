@@ -1,0 +1,37 @@
+---
+import type { Act } from "../data/equipment";
+import ActSection from "./ActSection.astro";
+
+interface Props {
+  acts: Act[];
+}
+
+const { acts }: Props = Astro.props;
+---
+
+<section id="equipment" class="ledger" tabindex="-1" aria-labelledby="equipment-title">
+  <header class="equipment-intro">
+    <p class="section-kicker">Acquisition checklist</p>
+    <h2 id="equipment-title">Find every piece before moving on</h2>
+    <p>Filter by act, search by place or item, and mark each piece as collected.</p>
+  </header>
+
+  <div class="spoiler-note">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19">
+      <path d="M12 3 2.8 19h18.4L12 3Z"></path>
+      <path d="M12 9v4.5M12 17h.01"></path>
+    </svg>
+    <p>
+      <strong>Route notes contain names and locations.</strong> Major story outcomes are omitted unless
+      they determine whether an item can be obtained.
+    </p>
+  </div>
+
+  {acts.map((act) => <ActSection act={act} />)}
+
+  <div class="empty-state" id="empty-state" hidden>
+    <p class="empty-state__sigil" aria-hidden="true">⌁</p>
+    <h2>Nothing in the ledger</h2>
+    <p>Try another item, location, or character name.</p>
+  </div>
+</section>

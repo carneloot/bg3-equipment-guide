@@ -1,1 +1,5 @@
 .amp/
+node_modules/
+dist/
+.astro/
+.alchemy/

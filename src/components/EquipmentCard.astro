@@ -1,5 +1,5 @@
 ---
-import type { EquipmentItem } from "../data/equipment";
+import { getEquipmentId, type EquipmentItem } from "../data/equipment";
 
 interface Props {
   act: number;
@@ -7,11 +7,11 @@ interface Props {
 }
 
 const { act, item }: Props = Astro.props;
-const id = item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const id = getEquipmentId(item.name);
 const searchText = `${item.name} ${item.type} ${item.location} ${item.directions}`.toLowerCase();
 ---
 
-<article class="item-card" data-act={act} data-search={searchText}>
+<article id={id} class="item-card" data-act={act} data-search={searchText}>
   <div class="item-card__art">
     <img src={`/${item.image}`} alt="" width="144" height="144" loading="lazy" />
     <label class="item-card__check" title={`Mark ${item.name} as collected`}>

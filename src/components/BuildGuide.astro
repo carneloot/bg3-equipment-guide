@@ -1,4 +1,6 @@
 ---
+import { acts, getEquipmentId } from "../data/equipment";
+
 const levels = [
   { classLevel: "Monk 1", choice: "Martial Arts, Flurry of Blows" },
   { classLevel: "Monk 2", choice: "Patient Defence, Step of the Wind" },
@@ -22,6 +24,27 @@ const abilities = [
   ["WIS", 16],
   ["CHA", 10],
 ];
+
+const equipment = acts.flatMap((act) => act.items);
+const loadout = [
+  { slot: "Main hand", name: "Bloodthirst" },
+  { slot: "Off-hand", name: "Crimson Mischief" },
+  { slot: "Ranged", name: "The Dead Shot" },
+  { slot: "Head", name: "Mask of Soul Perception" },
+  { slot: "Cloak", name: "Shade-Slayer Cloak" },
+  { slot: "Body", name: "Vest of Soul Rejuvenation" },
+  { slot: "Hands", name: "Bonespike Gloves" },
+  { slot: "Feet · Option A", name: "Disintegrating Night Walkers" },
+  { slot: "Feet · Option B", name: "Bonespike Boots" },
+  { slot: "Amulet", name: "Sentient Amulet (Very Rare)", displayName: "Sentient Amulet" },
+  { slot: "Ring", name: "Killer's Sweetheart" },
+  { slot: "Ring", name: "Ring of Free Action" },
+].map(({ slot, name, displayName }) => {
+  const item = equipment.find((candidate) => candidate.name === name);
+  if (!item) throw new Error(`Missing level 12 loadout item: ${name}`);
+
+  return { slot, displayName: displayName ?? name, item };
+});
 ---
 
 <section id="build" class="build-guide" tabindex="-1" aria-labelledby="build-title">
@@ -60,15 +83,36 @@ const abilities = [
         <li>Shadow Step for Advantage, then use Sneak Attack.</li>
         <li>Use Stunning Strike on threats. Hide or teleport out.</li>
       </ol>
-      <p class="build-card__label loadout-label">Level 12 loadout</p>
-      <p class="loadout-summary">
-        <strong>Bloodthirst</strong> main hand · <strong>Crimson Mischief</strong> off-hand ·{" "}
-        <strong>The Dead Shot</strong> · Mask of Soul Perception · Shade-Slayer Cloak · Vest of Soul
-        Rejuvenation · Bonespike Gloves · Disintegrating Night Walkers or Bonespike Boots · Sentient
-        Amulet · Killer's Sweetheart · Ring of Free Action
-      </p>
     </section>
   </div>
+
+  <section class="loadout" aria-labelledby="loadout-title">
+    <header class="loadout__heading">
+      <div>
+        <p class="section-kicker">Endgame equipment</p>
+        <h3 id="loadout-title">Level 12 loadout</h3>
+      </div>
+      <p>Select an item to jump to where and how to get it.</p>
+    </header>
+    <ul class="loadout-grid">
+      {loadout.map(({ slot, displayName, item }) => (
+        <li>
+          <a class="loadout-item" href={`#${getEquipmentId(item.name)}`}>
+            <span class="loadout-item__art">
+              <img src={`/${item.image}`} alt="" width="72" height="72" loading="lazy" />
+            </span>
+            <span class="loadout-item__copy">
+              <span class="loadout-item__slot">{slot}</span>
+              <strong>{displayName}</strong>
+            </span>
+            <svg aria-hidden="true" viewBox="0 0 20 20">
+              <path d="m7 4 6 6-6 6"></path>
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 
   <section class="level-section" aria-labelledby="levels-title">
     <div class="level-section__heading">

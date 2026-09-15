@@ -16,6 +16,9 @@ export interface Act {
   items: EquipmentItem[];
 }
 
+export const getEquipmentId = (name: string) =>
+  name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 export const acts: Act[] = [
   {
     id: 1,

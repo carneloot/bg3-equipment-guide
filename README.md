@@ -15,10 +15,11 @@ Run `pnpm build` to type-check and build the static site.
 
 ## Deployment
 
-Pushes to `main` deploy [bg3.carneloot.com](https://bg3.carneloot.com) through Alchemy in GitHub Actions after a successful build. The `production` environment needs:
+Pushes to `main` deploy [bg3.carneloot.com](https://bg3.carneloot.com) through Alchemy in GitHub Actions after a successful build. The `production` environment needs the `OP_SERVICE_ACCOUNT_TOKEN` secret for a 1Password service account with access to:
 
-- `CLOUDFLARE_API_TOKEN` as a secret
-- `CLOUDFLARE_ACCOUNT_ID` as a variable
+- Vault: `Secrets`
+- Item: `bg3-equipment-guide-github`
+- Fields: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
 
 The workflow verifies the production URL and restores the previous Worker deployment if the health check fails.
 

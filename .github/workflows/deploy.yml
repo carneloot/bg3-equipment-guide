@@ -35,8 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       WORKER_HOST: bg3.carneloot.com
     steps:
       - uses: actions/checkout@v4
@@ -52,8 +50,19 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Load secrets from 1Password
+        id: secrets
+        uses: 1password/load-secrets-action@v5
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: op://Secrets/bg3-equipment-guide-github/CLOUDFLARE_ACCOUNT_ID
+          CLOUDFLARE_API_TOKEN: op://Secrets/bg3-equipment-guide-github/CLOUDFLARE_API_TOKEN
+
       - name: Deploy, verify, and roll back on failure
         shell: bash
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ steps.secrets.outputs.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ steps.secrets.outputs.CLOUDFLARE_API_TOKEN }}
         run: |
           set -euo pipefail
 

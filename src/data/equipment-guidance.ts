@@ -20,10 +20,6 @@ export const equipmentGuidance = {
   "gloves-of-the-growling-underdog": {
     directions: "Take them from Dror Ragzlin's locked treasure crates behind the iron gate in the Shattered Sanctum.",
   },
-  "broodmother-s-revenge": {
-    directions: "Pickpocket or loot the amulet from Kagha in the Emerald Grove's Inner Sanctum.",
-    warning: "Take it from Kagha before leaving Act I. If she survives, it is not given as a quest reward.",
-  },
   "boots-of-stormy-clamour": {
     directions:
       "Complete Help Omeluum Investigate the Parasite, then buy the boots from Omeluum in the Myconid Colony.",
@@ -82,6 +78,10 @@ export const equipmentGuidance = {
     warning: "Shop while Last Light Inn is safe and Talli is available.",
   },
   "yuan-ti-scale-mail": {
+    directions: "Buy it from Quartermaster Talli near the Last Light Inn waypoint.",
+    warning: "Shop while Last Light Inn is safe and Talli is available.",
+  },
+  "amulet-of-the-harpers": {
     directions: "Buy it from Quartermaster Talli near the Last Light Inn waypoint.",
     warning: "Shop while Last Light Inn is safe and Talli is available.",
   },
@@ -200,6 +200,13 @@ export const equipmentGuidance = {
   "bhaalist-armour": {
     directions: "Become an Unholy Assassin at the Murder Tribunal, then buy it from the Echo of Abazigal.",
     warning: "Becoming an Unholy Assassin requires killing Valeria during the tribunal.",
+  },
+  "amulet-of-bhaal": {
+    directions:
+      "At the Murder Tribunal, earn it from Sarevok by completing Impress the Murder Tribunal, or defeat Sarevok and loot it from him.",
+  },
+  "amulet-of-the-devout": {
+    directions: "Open the main Offering Chest in the basement of Stormshore Tabernacle.",
   },
   "armour-of-agility": {
     directions: "Buy it from Gloomy Fentonson at Stormshore Armoury near the Lower City Central Wall waypoint.",

@@ -20,6 +20,10 @@ export const equipmentGuidance = {
   "gloves-of-the-growling-underdog": {
     directions: "Take them from Dror Ragzlin's locked treasure crates behind the iron gate in the Shattered Sanctum.",
   },
+  "broodmother-s-revenge": {
+    directions: "Pickpocket or loot the amulet from Kagha in the Emerald Grove's Inner Sanctum.",
+    warning: "Take it from Kagha before leaving Act I. If she survives, it is not given as a quest reward.",
+  },
   "boots-of-stormy-clamour": {
     directions:
       "Complete Help Omeluum Investigate the Parasite, then buy the boots from Omeluum in the Myconid Colony.",
@@ -28,6 +32,12 @@ export const equipmentGuidance = {
   "club-of-hill-giant-strength": {
     directions:
       "At the top of the Arcane Tower, find the Stool of Hill Giant Strength beneath the thatched roof and break it. Pick up the club it drops.",
+  },
+  "titanstring-bow": {
+    directions:
+      "Complete Find the Missing Shipment, then buy the bow from Brem's special stock in the Zhentarim Basement.",
+    warning:
+      "Keep the shipment intact and shop before turning the Zhentarim hostile. If Brem's stock was not unlocked, Lann Tarv can sell the bow at Moonrise Towers in Act II.",
   },
   "bow-of-the-banshee": {
     directions:
@@ -92,6 +102,10 @@ export const equipmentGuidance = {
   },
   "helmet-of-arcane-acuity": {
     directions: "Open the locked and trapped Gilded Chest in the secret basement beneath the Mason's Guild.",
+  },
+  "ring-of-mental-inhibition": {
+    directions:
+      "Open the locked chest in the ruined house just east of the Shadowed Battlefield waypoint.",
   },
   "thunderskin-cloak": {
     directions: "Buy it from Araj Oblodra on the main floor before the assault on Moonrise Towers.",

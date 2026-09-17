@@ -6,7 +6,7 @@ export default defineBuild({
   description: "A written Arcane Archer control build and equipment checklist for Baldur's Gate 3 Patch 8.",
   heroDescription:
     "A pure Fighter archer that banishes, blinds, frightens, and knocks enemies prone while stacking Arcane Acuity.",
-  class: "Arcane Archer Fighter",
+  class: "Fighter",
   levelSplit: "Fighter 12",
   intro:
     "Stay with Arcane Archer Fighter for all 12 levels. The build combines Arcane Shots with reverberation and frightened to control entire encounters.",
@@ -20,11 +20,11 @@ export default defineBuild({
     { label: "Background", value: "Player choice" },
     { label: "Start", value: "Fighter" },
   ],
-  abilities: { STR: 12, DEX: 16, CON: 14, INT: 16, WIS: 12, CHA: 8 },
+  abilities: { STR: 12, DEX: 16, CON: 14, INT: 16, WIS: 8, CHA: 8 },
   primaryAbility: "DEX",
   creationNotes: [
-    { label: "Bonuses", text: "+2 DEX, +1 INT." },
-    { label: "Fighting Style", text: "Choose Archery for +2 to ranged weapon attack rolls." },
+    { label: "Bonuses", text: "+1 DEX, +2 INT." },
+    { label: "Fighting Style", text: "Choose Archer for +2 to ranged weapon attack rolls." },
     {
       label: "High Half-Elf cantrip",
       text: "Choose Minor Illusion to group enemies before combat for Arrow of Many Targets.",
@@ -37,7 +37,7 @@ export default defineBuild({
     "Combine frightened from the Bow of the Banshee with prone from reverberation to prevent enemies from standing up.",
   ],
   levels: [
-    { classLevel: "Fighter 1", choice: "Archery Fighting Style, Second Wind" },
+    { classLevel: "Fighter 1", choice: "Archer Fighting Style, Second Wind" },
     { classLevel: "Fighter 2", choice: "Action Surge" },
     {
       classLevel: "Fighter 3",

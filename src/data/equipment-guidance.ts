@@ -20,6 +20,33 @@ export const equipmentGuidance = {
   "gloves-of-the-growling-underdog": {
     directions: "Take them from Dror Ragzlin's locked treasure crates behind the iron gate in the Shattered Sanctum.",
   },
+  "broodmother-s-revenge": {
+    directions: "Pickpocket or loot the amulet from Kagha in the Emerald Grove's Inner Sanctum.",
+    warning: "Take it from Kagha before leaving Act I. If she survives, it is not given as a quest reward.",
+  },
+  "boots-of-stormy-clamour": {
+    directions:
+      "Complete Help Omeluum Investigate the Parasite, then buy the boots from Omeluum in the Myconid Colony.",
+    warning: "Shop with Omeluum before leaving the Underdark.",
+  },
+  "club-of-hill-giant-strength": {
+    directions:
+      "At the top of the Arcane Tower, find the Stool of Hill Giant Strength beneath the thatched roof and break it. Pick up the club it drops.",
+  },
+  "bow-of-the-banshee": {
+    directions:
+      "Travel to Grymforge on Gekh Coal's boat, keep Corsair Greymon alive during the crossing, then buy the bow from him near the Grymforge waypoint.",
+    warning: "Do not shove Greymon into the lake. Buy the bow before leaving Grymforge or turning the duergar hostile.",
+  },
+  "ring-of-absolute-force": {
+    directions: "Loot it from Sergeant Thrinn in Grymforge after dealing with True Soul Nere.",
+    warning: "Do not leave Grymforge without looting Thrinn.",
+  },
+  "gloves-of-belligerent-skies": {
+    directions:
+      "Open the elegant chest against the southern wall on the west side of the Inquisitor's Chamber in Crèche Y'llek.",
+    warning: "Take the gloves before leaving the crèche after confronting the inquisitor.",
+  },
   "ring-of-protection": {
     directions:
       "Earn Mol's trust, accept Steal the Sacred Idol, then give her the Idol of Silvanus. The ring is the quest reward.",
@@ -65,6 +92,23 @@ export const equipmentGuidance = {
   },
   "helmet-of-arcane-acuity": {
     directions: "Open the locked and trapped Gilded Chest in the secret basement beneath the Mason's Guild.",
+  },
+  "thunderskin-cloak": {
+    directions: "Buy it from Araj Oblodra on the main floor before the assault on Moonrise Towers.",
+    warning:
+      "Fallback: if Araj survives and you miss it here, she can sell it at Crimson Draughts in the Lower City during Act III.",
+  },
+  "ring-of-spiteful-thunder": {
+    directions: "Buy it from Roah Moonglow on the main floor before the assault on Moonrise Towers.",
+    warning: "Shop before Moonrise Towers becomes hostile.",
+  },
+  "drakethroat-glaive": {
+    directions: "Buy it from Roah Moonglow on the main floor before the assault on Moonrise Towers.",
+    warning: "Shop before Moonrise Towers becomes hostile.",
+  },
+  "ketheric-s-shield": {
+    directions: "Defeat Ketheric Thorm and loot the shield from him in the Mind Flayer Colony.",
+    warning: "Loot Ketheric before leaving the colony for Baldur's Gate.",
   },
   "callous-glow-ring": {
     directions: "Open the opulent chest in the vault room near Balthazar's chamber in the Gauntlet of Shar.",
@@ -156,6 +200,9 @@ export const equipmentGuidance = {
   "bhaalist-armour": {
     directions: "Become an Unholy Assassin at the Murder Tribunal, then buy it from the Echo of Abazigal.",
     warning: "Becoming an Unholy Assassin requires killing Valeria during the tribunal.",
+  },
+  "armour-of-agility": {
+    directions: "Buy it from Gloomy Fentonson at Stormshore Armoury near the Lower City Central Wall waypoint.",
   },
   "shade-slayer-cloak": {
     directions:

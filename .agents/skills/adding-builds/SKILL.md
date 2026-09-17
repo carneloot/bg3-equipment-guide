@@ -19,7 +19,7 @@ Keep build choices separate from shared equipment facts. A build selects item ID
    - Keep universal item guidance here, never inside a build file. This prevents conflicting instructions when several builds use the same item.
 5. Add a new build to `src/builds/build-registry.ts`. Do not add a second route or page implementation; the dynamic build page owns rendering.
 6. Run `pnpm build`. If importer code or generated data changed, also run `pnpm test:equipment-sync`.
-7. Render the build and inspect the equipment tabs. Verify that earlier-act requirement cards appear in the required act, the item remains collectible only in its acquisition act, and collection progress counts each item once.
+7. Do not start a development or preview server, create a portal, or perform browser or visual validation. Adding the build files and completing the checks above is sufficient.
 
 ## Guidance decisions
 

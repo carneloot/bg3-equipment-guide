@@ -13,6 +13,10 @@ export const equipmentGuidance = {
     directions: "Buy them from Grat the Trader in the Goblin Camp courtyard.",
     warning: "Shop before the goblin camp becomes hostile.",
   },
+  "gloves-of-archery": {
+    directions: "Buy them from Grat the Trader in the Goblin Camp courtyard.",
+    warning: "Shop before the goblin camp becomes hostile.",
+  },
   "the-whispering-promise": {
     directions: "Trade with Volo while he is in the Emerald Grove or after rescuing him from the Goblin Camp.",
     warning: "Use the trade button during dialogue; the ring may not appear through a normal dialogue option.",
@@ -460,6 +464,11 @@ export const equipmentGuidance = {
   "craterflesh-gloves": {
     directions: "Become an Unholy Assassin at the Murder Tribunal, then buy them from the Echo of Abazigal.",
     warning: "Becoming an Unholy Assassin requires killing Valeria during the tribunal.",
+  },
+  "dolor-amarus": {
+    directions:
+      "Collect two copies: loot one from Dolor, then become an Unholy Assassin and buy the second from the Echo of Abazigal at the Murder Tribunal.",
+    warning: "The second copy requires killing Valeria during the tribunal.",
   },
   "helldusk-boots": {
     directions: "Open the locked Gilded Chest in Gortash's bedroom on the top floor of Wyrm's Rock Fortress.",

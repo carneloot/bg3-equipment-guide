@@ -35,6 +35,20 @@ interface ProgressionConflict {
   note?: string;
 }
 
+interface PermanentBuff {
+  name: string;
+  source: string;
+  owners: readonly BuildId[];
+  effect: string;
+  why: string;
+  lostOnDeath?: boolean;
+}
+
+interface PermanentBuffAct {
+  act: string;
+  buffs: readonly PermanentBuff[];
+}
+
 const equipmentById = new Map(acts.flatMap((act) => act.items).map((item) => [item.id, item]));
 const getItem = (id: string) => {
   const item = equipmentById.get(id);
@@ -186,6 +200,131 @@ const progressionConflicts: readonly ProgressionConflict[] = [
     ],
   },
 ];
+
+const permanentBuffs: readonly PermanentBuffAct[] = [
+  {
+    act: "Act I",
+    buffs: [
+      {
+        name: "Auntie Ethel's Hair",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Auntie_Ethel's_Hair",
+        owners: ["GT"],
+        effect: "+1 Strength, including above 20.",
+        why: "It completes the Thrower's odd starting Strength and helps it reach 24 after its ASI, Everlasting Vigour, and the Mirror of Loss.",
+      },
+      {
+        name: "Volo's Ersatz Eye",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Volo's_Ersatz_Eye",
+        owners: ["LC"],
+        effect: "Permanent See Invisibility within 9 m.",
+        why: "The Cleric's high Perception and frontline position give it the best chance to reveal nearby invisible enemies.",
+      },
+      {
+        name: "Awakened",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Awakened",
+        owners: ["AA"],
+        effect: "Illithid powers cost a bonus action after passing all three Zaith'isk saves.",
+        why: "The Archer can group enemies with Black Hole, then use its action and extra attacks against the clustered targets.",
+      },
+      {
+        name: "Loviatar's Love",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Loviatar's_Love",
+        owners: ["HW"],
+        effect: "+2 to attack rolls and Wisdom saves below 30% health. Lost on death.",
+        why: "The melee Hexblade is the party member most likely to reach the health threshold and benefits directly from the extra accuracy.",
+        lostOnDeath: true,
+      },
+      {
+        name: "Necromancy of Thay",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Necromancy_of_Thay",
+        owners: ["LC"],
+        effect: "+1 to Wisdom saves and checks, Speak with Dead, and access to Danse Macabre in Act III.",
+        why: "The Cleric has the party's best Wisdom saves for finishing the book and can add its ghouls to an already support-focused turn.",
+      },
+      {
+        name: "Survival Instinct",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Survival_Instinct",
+        owners: ["AA"],
+        effect: "A once-per-short-rest safeguard that heals a creature when it drops to 0 HP.",
+        why: "Awakened lets the Archer apply it as a bonus action without giving up its attacks.",
+      },
+      {
+        name: "BOOOAL's Benediction",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#BOOOAL's_Benediction",
+        owners: ["HW", "LC", "AA", "GT"],
+        effect: "Advantage against Bleeding targets for every present party member. Keep the kuo-toa alive to retain it.",
+        why: "All four characters can receive it, and the Archer's Amulet of Bhaal supplies Bleeding for the whole party to exploit.",
+      },
+    ],
+  },
+  {
+    act: "Act II",
+    buffs: [
+      {
+        name: "Potion of Everlasting Vigour",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Potion_of_Everlasting_Vigour",
+        owners: ["GT"],
+        effect: "+2 Strength, including above 20. It remains after death and respeccing.",
+        why: "Strength increases both the Thrower's accuracy and damage through Tavern Brawler, making this the party's highest-value recipient.",
+      },
+      {
+        name: "Githzerai Mind Barrier",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Githzerai_Mind_Barrier",
+        owners: ["GT"],
+        effect: "Advantage on Intelligence saves. Lost on death.",
+        why: "The Thrower starts with 8 Intelligence and otherwise has little protection against Intelligence-based control.",
+        lostOnDeath: true,
+      },
+      {
+        name: "Arabella's Shadow Entangle",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Arabella's_Shadow_Entangle",
+        owners: ["LC"],
+        effect: "Restrains one Undead or Shadow creature once per short rest.",
+        why: "The Cleric can hold a target inside Spirit Guardians while the rest of the party attacks it with advantage.",
+      },
+    ],
+  },
+  {
+    act: "Act III",
+    buffs: [
+      {
+        name: "Mirror of Loss",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Mirror_of_Loss",
+        owners: ["HW", "LC", "AA", "GT"],
+        effect: "Each character can gain +2 to one ability, up to 24, and may also obtain the optional +1 Charisma memory.",
+        why: "It is not a shared resource. Give HW Charisma, LC Wisdom, AA Dexterity, and GT Strength; seek the extra Charisma memory for HW.",
+      },
+      {
+        name: "Sweet Stone Features",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Sweet_Stone_Features",
+        owners: ["AA"],
+        effect: "+1d4 to attack rolls and saving throws after each long rest. Only one party member can have the statue.",
+        why: "The accuracy offsets Sharpshooter on every one of the Archer's three attacks, including Arrow of Many Targets attack rolls.",
+      },
+      {
+        name: "The Tharchiate Codex: Blessing",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#The_Tharchiate_Codex:_Blessing",
+        owners: ["LC"],
+        effect: "20 temporary HP after each long rest and the key to finishing the Necromancy of Thay.",
+        why: "The Cleric already holds the Necromancy of Thay, so the same character must read the Codex to unlock Danse Macabre.",
+      },
+      {
+        name: "Anointed in Splendour",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Anointed_in_Splendour",
+        owners: ["HW", "LC", "AA", "GT"],
+        effect: "+2 to every saving throw. Each character can make a separate offering at Stormshore Tabernacle.",
+        why: "The reward is available separately to every character, so there is no reason to choose only one recipient if the party can afford it.",
+      },
+      {
+        name: "Partial Ceremorphosis",
+        source: "https://bg3.wiki/wiki/Permanent_bonuses#Partial_Ceremorphosis",
+        owners: ["HW", "LC", "AA", "GT"],
+        effect: "Unlocks Fly, all tier-one illithid powers, and access to tier-three powers, with permanent cosmetic consequences.",
+        why: "Fly improves positioning for every build. Give it to every willing character because the Astral-Touched Tadpole can be shared.",
+      },
+    ],
+  },
+];
 ---
 
 <SiteLayout
@@ -257,6 +396,56 @@ const progressionConflicts: readonly ProgressionConflict[] = [
       <p class="allocation-note">
         Everything not listed here stays as written in the original builds. These are only the contested final slots.
       </p>
+    </section>
+
+    <section class="permanent-bonuses" aria-labelledby="permanent-bonuses-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">One chance per campaign</p>
+          <h2 id="permanent-bonuses-title">Permanent bonus plan</h2>
+        </div>
+        <p>Recommended recipients</p>
+      </div>
+      <p class="permanent-bonuses__intro">
+        Assign character-bound rewards before starting their scenes. Bonuses shown for all four characters can be
+        earned by everyone, provided each character meets the requirement.
+      </p>
+
+      <div class="buff-act-grid">
+        {permanentBuffs.map((group) => (
+          <section class="buff-act">
+            <header>
+              <p>{group.act}</p>
+              <span>{group.buffs.length} bonuses</span>
+            </header>
+            <ol>
+              {group.buffs.map((buff) => (
+                <li>
+                  <div class="buff-card__heading">
+                    <a href={buff.source} target="_blank" rel="noreferrer">{buff.name} <span aria-hidden="true">↗</span></a>
+                    <div class="buff-card__meta">
+                      {buff.lostOnDeath && (
+                        <span class="death-warning" title="Lost on death" aria-label="Lost on death">
+                          <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M12 2a9 9 0 0 0-5 16.5V22h3v-3h4v3h3v-3.5A9 9 0 0 0 12 2Z" />
+                            <path d="M9 11.5h.01M15 11.5h.01M10 15.5h4" />
+                          </svg>
+                          <span class="sr-only">Lost on death</span>
+                        </span>
+                      )}
+                      <p class="build-owners" aria-label={`Recommended for ${buff.owners.map(getBuildName).join(", ")}`}>
+                        {buff.owners.map((owner) => <abbr title={getBuildName(owner)} data-build={owner}>{owner}</abbr>)}
+                      </p>
+                    </div>
+                  </div>
+                  <p>{buff.effect}</p>
+                  <p class="buff-card__why"><strong>Why:</strong> {buff.why}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
     </section>
 
     <section class="conflicts" aria-labelledby="final-conflicts-title">
@@ -492,6 +681,7 @@ const progressionConflicts: readonly ProgressionConflict[] = [
   }
 
   .allocation,
+  .permanent-bonuses,
   .conflicts,
   .progression {
     padding-top: clamp(3.5rem, 8vw, 6rem);
@@ -565,11 +755,153 @@ const progressionConflicts: readonly ProgressionConflict[] = [
   }
 
   .allocation-note,
-  .progression__intro {
+  .progression__intro,
+  .permanent-bonuses__intro {
     max-width: 62ch;
     margin: 1rem 0 0;
     color: var(--ink-muted);
     font-size: 0.95rem;
+  }
+
+  .permanent-bonuses__intro {
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buff-act-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line-bright);
+    border-bottom: 1px solid var(--line-bright);
+  }
+
+  .buff-act {
+    min-width: 0;
+    padding: 1.5rem;
+  }
+
+  .buff-act + .buff-act {
+    border-left: 1px solid var(--line);
+  }
+
+  .buff-act > header {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .buff-act > header p {
+    margin: 0;
+    color: var(--gold-bright);
+    font: 600 1.2rem var(--serif-display);
+  }
+
+  .buff-act > header span {
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .buff-act ol {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .buff-act li {
+    padding: 0.9rem 0;
+  }
+
+  .buff-act li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .buff-card__heading {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .buff-card__heading > a {
+    display: block;
+    min-height: 44px;
+    padding: 0.6rem 0;
+    color: var(--ink-bright);
+    font: 600 0.98rem / 1.25 var(--serif-display);
+    text-decoration-color: var(--line-bright);
+    text-underline-offset: 0.2em;
+  }
+
+  .buff-card__heading > a span {
+    margin-left: 0.3rem;
+    color: var(--gold);
+    font-family: var(--serif-body);
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .buff-card__meta {
+    display: flex;
+    flex: none;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .buff-card__meta .build-owners {
+    flex: none;
+    margin: 0;
+  }
+
+  .death-warning {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid color-mix(in oklch, var(--red-bright) 65%, transparent);
+    border-radius: 50%;
+    color: var(--red-bright);
+    cursor: help;
+  }
+
+  .death-warning svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+
+  .buff-act li > p {
+    margin: 0.2rem 0 0;
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .buff-act li > .buff-card__why {
+    margin-top: 0.55rem;
+    color: #c8bdad;
+  }
+
+  .buff-card__why strong {
+    color: var(--build-color, var(--gold-bright));
+    font-family: var(--serif-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .buff-card__heading > a:hover {
+      color: var(--gold-bright);
+      text-decoration-color: currentColor;
+    }
   }
 
   .conflict-list {
@@ -866,6 +1198,15 @@ const progressionConflicts: readonly ProgressionConflict[] = [
       border-top: 1px solid var(--line);
     }
 
+    .buff-act-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .buff-act + .buff-act {
+      border-top: 1px solid var(--line-bright);
+      border-left: 0;
+    }
+
     .conflict-card {
       grid-template-columns: 2.5rem 1fr;
     }
@@ -961,6 +1302,7 @@ const progressionConflicts: readonly ProgressionConflict[] = [
     }
 
     .allocation,
+    .permanent-bonuses,
     .conflicts,
     .progression {
       padding-top: 2rem;
@@ -968,7 +1310,8 @@ const progressionConflicts: readonly ProgressionConflict[] = [
 
     .conflict-card,
     .progression-row,
-    .allocation-card {
+    .allocation-card,
+    .buff-act li {
       break-inside: avoid;
     }
   }

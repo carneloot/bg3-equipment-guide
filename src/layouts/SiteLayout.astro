@@ -5,9 +5,10 @@ interface Props {
   title: string;
   description: string;
   backHref?: string;
+  noindex?: boolean;
 }
 
-const { title, description, backHref }: Props = Astro.props;
+const { title, description, backHref, noindex = false }: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -17,6 +18,7 @@ const { title, description, backHref }: Props = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#17130f" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

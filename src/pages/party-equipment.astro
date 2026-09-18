@@ -1,0 +1,1138 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { acts } from "../data/equipment";
+
+type BuildId = "HW" | "LC" | "AA" | "GT";
+
+interface Allocation {
+  build: string;
+  short: BuildId;
+  items: readonly string[];
+}
+
+interface FinalConflict {
+  item: string;
+  builds: readonly BuildId[];
+  recommendationOwner: BuildId;
+  recommendation: string;
+  reason: string;
+  alternatives: readonly {
+    owner: BuildId;
+    label: string;
+    items: readonly string[];
+  }[];
+}
+
+interface ProgressionConflict {
+  item: string;
+  builds: readonly BuildId[];
+  alternatives: readonly {
+    owner: BuildId;
+    item?: string;
+    text?: string;
+  }[];
+  note?: string;
+}
+
+const equipmentById = new Map(acts.flatMap((act) => act.items).map((item) => [item.id, item]));
+const getItem = (id: string) => {
+  const item = equipmentById.get(id);
+  if (!item) throw new Error(`Unknown party equipment item: ${id}`);
+  return item;
+};
+
+const builds = [
+  { short: "HW", name: "Hexblade Warlock" },
+  { short: "LC", name: "Light Cleric" },
+  { short: "AA", name: "Arcane Archer" },
+  { short: "GT", name: "Giant Thrower" },
+] as const;
+const buildNames = new Map<BuildId, string>(builds.map((build) => [build.short, build.name]));
+const getBuildName = (build: BuildId) => buildNames.get(build) ?? build;
+
+const finalAllocation: readonly Allocation[] = [
+  {
+    build: "Hexblade Warlock",
+    short: "HW",
+    items: ["armour-of-agility", "shadow-cloaked-ring"],
+  },
+  {
+    build: "Light Cleric",
+    short: "LC",
+    items: ["amulet-of-the-devout", "helldusk-boots", "viconia-s-walking-fortress"],
+  },
+  {
+    build: "Arcane Archer",
+    short: "AA",
+    items: ["ketheric-s-shield", "sharpened-snare-cuirass", "amulet-of-bhaal"],
+  },
+  {
+    build: "Giant Thrower",
+    short: "GT",
+    items: ["boots-of-speed", "ring-of-flinging"],
+  },
+] as const;
+
+const finalConflicts: readonly FinalConflict[] = [
+  {
+    item: "armour-of-agility",
+    builds: ["HW", "AA"],
+    recommendationOwner: "HW",
+    recommendation: "Keep on Hexblade",
+    reason: "The melee Hexblade benefits more from its AC and +2 to every saving throw.",
+    alternatives: [
+      { owner: "HW", label: "Hexblade Warlock", items: ["elegant-studded-leather"] },
+      { owner: "AA", label: "Arcane Archer", items: ["sharpened-snare-cuirass", "yuan-ti-scale-mail"] },
+    ],
+  },
+  {
+    item: "ketheric-s-shield",
+    builds: ["LC", "AA"],
+    recommendationOwner: "AA",
+    recommendation: "Keep on Arcane Archer",
+    reason: "It raises the save DC of Arcane Shots while preserving the archer’s shield slot.",
+    alternatives: [
+      { owner: "LC", label: "Light Cleric", items: ["viconia-s-walking-fortress"] },
+      { owner: "AA", label: "Arcane Archer", items: ["sentinel-shield"] },
+      { owner: "HW", label: "Hexblade, while levelling", items: ["shield-of-devotion"] },
+    ],
+  },
+  {
+    item: "amulet-of-the-devout",
+    builds: ["LC", "AA"],
+    recommendationOwner: "LC",
+    recommendation: "Keep on Light Cleric",
+    reason: "The Cleric uses both the spell save DC and the additional Channel Divinity charge.",
+    alternatives: [
+      { owner: "LC", label: "Light Cleric", items: ["amulet-of-restoration"] },
+      { owner: "AA", label: "Arcane Archer", items: ["amulet-of-bhaal"] },
+    ],
+  },
+  {
+    item: "helldusk-boots",
+    builds: ["LC", "GT"],
+    recommendationOwner: "LC",
+    recommendation: "Keep on Light Cleric",
+    reason: "The automatic saving throw and mobility help protect Spirit Guardians.",
+    alternatives: [
+      { owner: "LC", label: "Light Cleric", items: ["boots-of-striding"] },
+      { owner: "GT", label: "Giant Thrower", items: ["boots-of-speed"] },
+    ],
+  },
+  {
+    item: "shadow-cloaked-ring",
+    builds: ["HW", "GT"],
+    recommendationOwner: "HW",
+    recommendation: "Keep on Hexblade",
+    reason: "Darkness makes its conditional damage much more reliable for the Hexblade.",
+    alternatives: [
+      { owner: "HW", label: "Hexblade Warlock", items: ["killer-s-sweetheart", "risky-ring"] },
+      { owner: "GT", label: "Giant Thrower", items: ["ring-of-flinging"] },
+    ],
+  },
+] as const;
+
+const progressionConflicts: readonly ProgressionConflict[] = [
+  {
+    item: "adamantine-shield",
+    builds: ["HW", "LC"],
+    alternatives: [
+      { owner: "HW", item: "safeguard-shield" },
+      { owner: "LC", item: "glowing-shield" },
+    ],
+  },
+  {
+    item: "bow-of-awareness",
+    builds: ["HW", "LC", "GT"],
+    alternatives: [
+      { owner: "HW", item: "hunting-shortbow" },
+      { owner: "LC", item: "darkfire-shortbow" },
+      { owner: "GT", item: "the-joltshooter" },
+    ],
+  },
+  {
+    item: "evasive-shoes",
+    builds: ["HW", "LC"],
+    alternatives: [
+      { owner: "HW", item: "disintegrating-night-walkers" },
+      { owner: "LC", item: "boots-of-striding" },
+    ],
+  },
+  {
+    item: "drakethroat-glaive",
+    builds: ["HW", "AA"],
+    alternatives: [
+      { owner: "HW", text: "Cast its own Elemental Weapon, learned at level 6" },
+      { owner: "AA", text: "Use the thunder buff for Reverberation" },
+    ],
+    note: "Prioritise the Arcane Archer: the Hexblade has a built-in substitute, while the Archer relies on thunder damage for its Reverberation setup.",
+  },
+  {
+    item: "boots-of-stormy-clamour",
+    builds: ["AA", "GT"],
+    alternatives: [
+      { owner: "AA", item: "the-speedy-lightfeet" },
+      { owner: "GT", item: "boots-of-speed" },
+    ],
+  },
+  {
+    item: "gloves-of-belligerent-skies",
+    builds: ["AA", "GT"],
+    alternatives: [
+      { owner: "AA", item: "gloves-of-archery" },
+      { owner: "GT", item: "gloves-of-uninhibited-kushigo" },
+    ],
+  },
+  {
+    item: "luminous-armour",
+    builds: ["LC", "GT"],
+    alternatives: [
+      { owner: "LC", item: "armour-of-landfall" },
+      { owner: "GT", item: "enraging-heart-garb" },
+    ],
+  },
+  {
+    item: "callous-glow-ring",
+    builds: ["LC", "GT"],
+    alternatives: [
+      { owner: "LC", item: "the-whispering-promise" },
+      { owner: "GT", item: "caustic-band" },
+    ],
+  },
+  {
+    item: "surgeon-s-subjugation-amulet",
+    builds: ["LC", "GT"],
+    alternatives: [
+      { owner: "LC", item: "amulet-of-restoration" },
+      { owner: "GT", item: "killer-s-sweetheart" },
+    ],
+  },
+  {
+    item: "thunderskin-cloak",
+    builds: ["AA", "GT"],
+    alternatives: [
+      { owner: "AA", item: "cloak-of-the-weave" },
+      { owner: "GT", item: "the-deathstalker-mantle" },
+    ],
+  },
+];
+---
+
+<SiteLayout
+  title="Party equipment plan | The Wayfarer's Ledger"
+  description="A conflict-free equipment plan for the Hexblade Warlock, Light Cleric, Arcane Archer, and Giant Thrower."
+  noindex
+>
+  <article class="party-plan">
+    <header class="party-hero">
+      <div class="party-hero__copy">
+        <p class="eyebrow">Four builds · one loot pool</p>
+        <h1>Who gets what?</h1>
+        <p class="party-hero__lede">
+          A practical equipment split for our Hexblade Warlock, Light Cleric, Arcane Archer, and Giant Thrower.
+          Start with the final allocation; use the fallback list when two characters want the same item while levelling.
+        </p>
+      </div>
+      <div class="party-roster" aria-label="Build abbreviations">
+        {builds.map((build) => (
+          <div class="party-roster__member" data-build={build.short}>
+            <abbr title={build.name}>{build.short}</abbr>
+            <strong>{build.name}</strong>
+          </div>
+        ))}
+      </div>
+    </header>
+
+    <section class="allocation" aria-labelledby="allocation-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Use this split</p>
+          <h2 id="allocation-title">Conflict-free final allocation</h2>
+        </div>
+        <p>Recommended</p>
+      </div>
+
+      <div class="allocation-grid">
+        {finalAllocation.map((entry) => (
+          <section class="allocation-card" data-build={entry.short}>
+            <header>
+              <abbr title={entry.build}>{entry.short}</abbr>
+              <h3>{entry.build}</h3>
+            </header>
+            <ul>
+              {entry.items.map((id) => {
+                const item = getItem(id);
+                return (
+                  <li>
+                    <button
+                      class="item-reference"
+                      type="button"
+                      data-item-reference
+                      data-name={item.name}
+                      data-meta={`${item.rarity} · ${item.type}`}
+                      data-description={item.effects}
+                      data-image={item.image}
+                      data-source={item.source}
+                    >
+                      {item.image && <img src={item.image} alt="" width="36" height="36" loading="lazy" />}
+                      <span>{item.name}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
+      <p class="allocation-note">
+        Everything not listed here stays as written in the original builds. These are only the contested final slots.
+      </p>
+    </section>
+
+    <section class="conflicts" aria-labelledby="final-conflicts-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Five decisions</p>
+          <h2 id="final-conflicts-title">Final-loadout conflicts</h2>
+        </div>
+        <p>Matters at level 12</p>
+      </div>
+
+      <div class="conflict-list">
+        {finalConflicts.map((conflict, index) => (
+          <article class="conflict-card">
+            <div class="conflict-card__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+            <div class="conflict-card__decision">
+              <p class="build-owners" aria-label="Builds sharing this item">
+                {conflict.builds.map((build) => <abbr title={getBuildName(build)} data-build={build}>{build}</abbr>)}
+              </p>
+              <h3>
+                {(() => {
+                  const item = getItem(conflict.item);
+                  return (
+                    <button
+                      class="item-reference item-reference--title"
+                      type="button"
+                      data-item-reference
+                      data-name={item.name}
+                      data-meta={`${item.rarity} · ${item.type}`}
+                      data-description={item.effects}
+                      data-image={item.image}
+                      data-source={item.source}
+                    >
+                      {item.image && <img src={item.image} alt="" width="44" height="44" loading="lazy" />}
+                      <span>{item.name}</span>
+                    </button>
+                  );
+                })()}
+              </h3>
+              <strong data-build={conflict.recommendationOwner}>{conflict.recommendation}</strong>
+              <p>{conflict.reason}</p>
+            </div>
+            <div class="conflict-card__fallbacks">
+              <p>Fallbacks for either choice</p>
+              <dl>
+                {conflict.alternatives.map((alternative) => (
+                  <div>
+                    <dt data-build={alternative.owner}>{alternative.label}</dt>
+                    <dd>
+                      {alternative.items.map((id, itemIndex) => {
+                        const item = getItem(id);
+                        return (
+                          <>
+                            {itemIndex > 0 && <span class="item-separator">or</span>}
+                            <button
+                              class="item-reference item-reference--compact"
+                              type="button"
+                              data-item-reference
+                              data-name={item.name}
+                              data-meta={`${item.rarity} · ${item.type}`}
+                              data-description={item.effects}
+                              data-image={item.image}
+                              data-source={item.source}
+                            >
+                              {item.image && <img src={item.image} alt="" width="32" height="32" loading="lazy" />}
+                              <span>{item.name}</span>
+                            </button>
+                          </>
+                        );
+                      })}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="progression" aria-labelledby="progression-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Temporary overlaps</p>
+          <h2 id="progression-title">Conflicts while levelling</h2>
+        </div>
+        <p>10 shared items</p>
+      </div>
+      <p class="progression__intro">
+        These items appear in more than one route, but not in both final loadouts. Pass them between characters when
+        someone upgrades, or use the replacements below.
+      </p>
+
+      <div class="progression-list">
+        {progressionConflicts.map((conflict) => (
+          <article class="progression-row">
+            <div>
+              <p class="build-owners" aria-label="Builds sharing this item">
+                {conflict.builds.map((build) => <abbr title={getBuildName(build)} data-build={build}>{build}</abbr>)}
+              </p>
+              <h3>
+                {(() => {
+                  const item = getItem(conflict.item);
+                  return (
+                    <button
+                      class="item-reference item-reference--title"
+                      type="button"
+                      data-item-reference
+                      data-name={item.name}
+                      data-meta={`${item.rarity} · ${item.type}`}
+                      data-description={item.effects}
+                      data-image={item.image}
+                      data-source={item.source}
+                    >
+                      {item.image && <img src={item.image} alt="" width="40" height="40" loading="lazy" />}
+                      <span>{item.name}</span>
+                    </button>
+                  );
+                })()}
+              </h3>
+            </div>
+            <div class="progression-row__alternatives">
+              {conflict.alternatives.map((alternative) => (
+                <div class="progression-alternative">
+                  <abbr title={getBuildName(alternative.owner)} data-build={alternative.owner}>{alternative.owner}</abbr>
+                  {alternative.item ? (() => {
+                    const item = getItem(alternative.item);
+                    return (
+                      <button
+                        class="item-reference item-reference--compact"
+                        type="button"
+                        data-item-reference
+                        data-name={item.name}
+                        data-meta={`${item.rarity} · ${item.type}`}
+                        data-description={item.effects}
+                        data-image={item.image}
+                        data-source={item.source}
+                      >
+                        {item.image && <img src={item.image} alt="" width="32" height="32" loading="lazy" />}
+                        <span>{item.name}</span>
+                      </button>
+                    );
+                  })() : <span>{alternative.text}</span>}
+                </div>
+              ))}
+              {conflict.note && <small>{conflict.note}</small>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <aside class="legend" aria-label="Build abbreviation key">
+      <strong>Build key</strong>
+      <p><abbr title="Hexblade Warlock" data-build="HW">HW</abbr> Hexblade Warlock</p>
+      <p><abbr title="Light Cleric" data-build="LC">LC</abbr> Light Cleric</p>
+      <p><abbr title="Arcane Archer" data-build="AA">AA</abbr> Arcane Archer</p>
+      <p><abbr title="Giant Thrower" data-build="GT">GT</abbr> Giant Thrower</p>
+    </aside>
+  </article>
+
+  <dialog class="item-dialog" data-item-dialog aria-labelledby="item-dialog-title">
+    <button class="item-dialog__close" type="button" data-item-dialog-close aria-label="Close item details">×</button>
+    <div class="item-dialog__art"><img data-item-dialog-image src="" alt="" width="128" height="128" /></div>
+    <div class="item-dialog__body">
+      <p data-item-dialog-meta></p>
+      <h2 id="item-dialog-title" data-item-dialog-name></h2>
+      <p data-item-dialog-description></p>
+      <a data-item-dialog-source href="" target="_blank" rel="noreferrer">Open on BG3 Wiki ↗</a>
+    </div>
+  </dialog>
+</SiteLayout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-item-dialog]");
+  const dialogImage = dialog?.querySelector<HTMLImageElement>("[data-item-dialog-image]");
+  const dialogName = dialog?.querySelector<HTMLElement>("[data-item-dialog-name]");
+  const dialogMeta = dialog?.querySelector<HTMLElement>("[data-item-dialog-meta]");
+  const dialogDescription = dialog?.querySelector<HTMLElement>("[data-item-dialog-description]");
+  const dialogSource = dialog?.querySelector<HTMLAnchorElement>("[data-item-dialog-source]");
+
+  document.querySelectorAll<HTMLButtonElement>("[data-item-reference]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!dialog || !dialogImage || !dialogName || !dialogMeta || !dialogDescription || !dialogSource) return;
+      dialogImage.src = button.dataset.image ?? "";
+      dialogImage.hidden = !button.dataset.image;
+      dialogName.textContent = button.dataset.name ?? "";
+      dialogMeta.textContent = button.dataset.meta ?? "";
+      dialogDescription.textContent = button.dataset.description ?? "";
+      dialogSource.href = button.dataset.source ?? "";
+      dialog.showModal();
+    });
+  });
+
+  dialog?.querySelector<HTMLButtonElement>("[data-item-dialog-close]")?.addEventListener("click", () => dialog.close());
+  dialog?.addEventListener("click", (event) => {
+    const bounds = dialog.getBoundingClientRect();
+    const outside =
+      event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom;
+    if (outside) dialog.close();
+  });
+</script>
+
+<style>
+  .party-plan {
+    --panel: rgb(36 29 22 / 0.78);
+    --panel-strong: #292118;
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding-bottom: 7rem;
+  }
+
+  [data-build="HW"] { --build-color: var(--gold-bright); }
+  [data-build="LC"] { --build-color: #c69be8; }
+  [data-build="AA"] { --build-color: var(--rare); }
+  [data-build="GT"] { --build-color: var(--red-bright); }
+
+  .party-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
+    gap: clamp(2.5rem, 7vw, 7rem);
+    align-items: end;
+    padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(4rem, 8vw, 6rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .party-hero h1 {
+    max-width: none;
+  }
+
+  .party-hero__lede {
+    max-width: 52ch;
+    margin: 0;
+    color: #c8bdad;
+    font-size: clamp(1.1rem, 2vw, 1.32rem);
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .party-roster {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .party-roster__member {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    gap: 0.8rem;
+    align-items: center;
+    min-height: 3.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .party-roster__member > abbr,
+  .allocation-card header > abbr {
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    color: var(--build-color);
+    font: 600 0.66rem var(--serif-display);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: help;
+  }
+
+  .party-roster__member strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .allocation,
+  .conflicts,
+  .progression {
+    padding-top: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .section-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    color: var(--ink-bright);
+    font: 600 clamp(1.8rem, 4vw, 3rem) / 1.1 var(--serif-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .section-heading > p {
+    flex: none;
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+  }
+
+  .allocation-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line-bright);
+    border-bottom: 1px solid var(--line-bright);
+  }
+
+  .allocation-card {
+    min-width: 0;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, color-mix(in oklch, var(--build-color) 7%, transparent), transparent 70%);
+  }
+
+  .allocation-card + .allocation-card {
+    border-left: 1px solid var(--line);
+  }
+
+  .allocation-card header {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.75rem;
+    align-items: center;
+    min-height: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .allocation-card h3 {
+    margin: 0;
+    color: var(--ink-bright);
+    font: 600 0.9rem / 1.3 var(--serif-display);
+  }
+
+  .allocation-card ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .allocation-card li {
+    min-width: 0;
+  }
+
+  .allocation-note,
+  .progression__intro {
+    max-width: 62ch;
+    margin: 1rem 0 0;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+  }
+
+  .conflict-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .conflict-card {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(15rem, 0.85fr) minmax(20rem, 1.15fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .conflict-card__number {
+    padding-top: 0.1rem;
+    color: var(--gold);
+    font: 500 1.7rem var(--serif-display);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+  }
+
+  .build-owners {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.3rem;
+    font: 600 0.64rem var(--serif-display);
+    letter-spacing: 0.12em;
+  }
+
+  .build-owners > abbr {
+    padding: 0.12rem 0.3rem;
+    border: 1px solid color-mix(in oklch, var(--build-color) 55%, transparent);
+    color: var(--build-color);
+    text-decoration: none;
+    cursor: help;
+  }
+
+  .conflict-card h3,
+  .progression-row h3 {
+    margin-bottom: 0.7rem;
+    color: var(--ink-bright);
+    font: 600 1.2rem / 1.25 var(--serif-display);
+  }
+
+  .conflict-card__decision > strong {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    color: var(--build-color);
+    font-size: 0.95rem;
+  }
+
+  .conflict-card__decision > p:last-child {
+    max-width: 42ch;
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .conflict-card__fallbacks {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .conflict-card__fallbacks > p {
+    margin-bottom: 0.65rem;
+    color: var(--ink-muted);
+    font: 600 0.62rem var(--serif-display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .conflict-card dl {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .conflict-card dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.7fr) minmax(0, 1.3fr);
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .conflict-card dt {
+    color: var(--build-color);
+    font-size: 0.88rem;
+  }
+
+  .conflict-card dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .item-separator {
+    color: var(--ink-muted);
+    font-size: 0.8rem;
+  }
+
+  .progression__intro {
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .progression-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+  }
+
+  .progression-row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.7fr) minmax(0, 1.3fr);
+    gap: 1.5rem;
+    min-height: 9rem;
+    padding: 1.25rem 1.5rem 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .progression-row:nth-child(even) {
+    padding-right: 0;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .progression-row h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .progression-row__alternatives {
+    display: grid;
+    gap: 0.35rem;
+    align-content: center;
+  }
+
+  .progression-alternative {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.45rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .progression-alternative > abbr {
+    color: var(--build-color);
+    font: 600 0.62rem var(--serif-display);
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    cursor: help;
+  }
+
+  .progression-alternative > span {
+    color: #c8bdad;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .progression-row small {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--ink-muted);
+    line-height: 1.35;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1.5rem;
+    margin-top: 3rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-muted);
+    font-size: 0.86rem;
+  }
+
+  .legend strong {
+    color: var(--gold);
+    font-family: var(--serif-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .legend p {
+    margin: 0;
+  }
+
+  .legend abbr {
+    margin-right: 0.25rem;
+    color: var(--build-color);
+    font-family: var(--serif-display);
+    font-size: 0.72rem;
+    text-decoration: none;
+    cursor: help;
+  }
+
+  .item-reference {
+    display: inline-grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.55rem;
+    align-items: center;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.2rem 0.35rem 0.2rem 0.2rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #cfc4b3;
+    font: inherit;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .item-reference img {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line);
+    object-fit: contain;
+    background: #17130f;
+  }
+
+  .item-reference--compact {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    min-height: 40px;
+    color: var(--ink-bright);
+    font-size: 0.88rem;
+  }
+
+  .item-reference--compact img {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .item-reference--title {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    padding-left: 0;
+    color: var(--ink-bright);
+    font: inherit;
+  }
+
+  .item-reference--title img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .item-reference:active {
+    transform: scale(0.98);
+  }
+
+  .item-dialog {
+    width: min(34rem, calc(100% - 2rem));
+    max-height: min(42rem, calc(100dvh - 2rem));
+    padding: 0;
+    border: 1px solid var(--line-bright);
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: 0 2px 3px rgb(0 0 0 / 0.28), 0 18px 50px rgb(0 0 0 / 0.45);
+  }
+
+  .item-dialog::backdrop {
+    background: rgb(8 6 4 / 0.78);
+    backdrop-filter: blur(3px);
+  }
+
+  .item-dialog__close {
+    position: absolute;
+    z-index: 1;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--line-bright);
+    background: rgb(23 19 15 / 0.88);
+    color: var(--ink-bright);
+    font: 1.5rem var(--serif-body);
+    cursor: pointer;
+  }
+
+  .item-dialog__art {
+    display: grid;
+    place-items: center;
+    min-height: 13rem;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(circle, rgb(199 168 104 / 0.13), transparent 55%),
+      var(--surface);
+  }
+
+  .item-dialog__art img {
+    width: 8rem;
+    height: 8rem;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgb(0 0 0 / 0.35));
+  }
+
+  .item-dialog__body {
+    padding: 1.5rem;
+  }
+
+  .item-dialog__body > p:first-child {
+    margin-bottom: 0.35rem;
+    color: var(--gold);
+    font: 600 0.65rem var(--serif-display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .item-dialog h2 {
+    margin-bottom: 0.8rem;
+    color: var(--ink-bright);
+    font: 600 clamp(1.4rem, 4vw, 2rem) / 1.15 var(--serif-display);
+  }
+
+  .item-dialog__body > p:nth-of-type(2) {
+    max-width: 58ch;
+    margin-bottom: 1.25rem;
+    color: #c8bdad;
+    white-space: pre-line;
+  }
+
+  .item-dialog__body > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--gold-bright);
+    font: 600 0.72rem var(--serif-display);
+    letter-spacing: 0.04em;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .item-reference:hover {
+      border-color: var(--line-bright);
+      background: rgb(199 168 104 / 0.05);
+      color: var(--ink-bright);
+    }
+
+    .item-dialog__close:hover {
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .party-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .party-roster {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .party-roster__member:nth-child(even) {
+      padding-left: 1rem;
+      border-left: 1px solid var(--line);
+    }
+
+    .allocation-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .allocation-card:nth-child(3) {
+      border-left: 0;
+    }
+
+    .allocation-card:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+
+    .conflict-card {
+      grid-template-columns: 2.5rem 1fr;
+    }
+
+    .conflict-card__fallbacks {
+      grid-column: 2;
+    }
+
+    .progression-list {
+      grid-template-columns: 1fr;
+    }
+
+    .progression-row:nth-child(even) {
+      padding-right: 0;
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .party-plan {
+      width: min(100% - 1.25rem, 1120px);
+    }
+
+    .party-hero {
+      padding-top: 3.5rem;
+    }
+
+    .party-roster {
+      grid-template-columns: 1fr;
+    }
+
+    .party-roster__member:nth-child(even) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .section-heading {
+      display: grid;
+    }
+
+    .section-heading > p {
+      display: none;
+    }
+
+    .allocation-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .allocation-card + .allocation-card {
+      border-top: 1px solid var(--line);
+      border-left: 0;
+    }
+
+    .conflict-card {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    .conflict-card__number {
+      display: none;
+    }
+
+    .conflict-card__fallbacks {
+      grid-column: 1;
+      margin-top: 0.5rem;
+    }
+
+    .conflict-card dl > div,
+    .progression-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+
+    .conflict-card dl > div + div {
+      margin-top: 0.35rem;
+    }
+
+    .progression-row {
+      min-height: auto;
+      padding: 1.25rem 0;
+    }
+
+    .item-dialog__art {
+      min-height: 10rem;
+    }
+
+    .item-dialog__art img {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+
+  @media print {
+    .party-plan {
+      width: 100%;
+      color: #211b15;
+    }
+
+    .party-hero {
+      padding-top: 2rem;
+    }
+
+    .allocation,
+    .conflicts,
+    .progression {
+      padding-top: 2rem;
+    }
+
+    .conflict-card,
+    .progression-row,
+    .allocation-card {
+      break-inside: avoid;
+    }
+  }
+</style>

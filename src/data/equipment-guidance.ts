@@ -333,4 +333,92 @@ export const equipmentGuidance = {
   bloodthirst: {
     directions: "Defeat Orin during Get Orin's Netherstone and loot the dagger from her.",
   },
+  "the-sparkle-hands": {
+    directions: "Open the wooden chest at the base of the giant tree stump in the Decrepit Sanctuary.",
+  },
+  "moondrop-pendant": {
+    directions: "Open the Selûnite Gilded Chest in the Owlbear Nest after reading the prayer sheet behind the statue.",
+  },
+  "boots-of-speed": {
+    directions: "Cure the poisoned deep gnome Thulla in the Myconid Colony, then accept the boots from her.",
+    warning: "Help Thulla before resolving the Grymforge conflict if you want her quest reward.",
+  },
+  "the-joltshooter": {
+    directions: "Rescue Counsellor Florrick from the burning inn at Waukeen's Rest and choose The Joltshooter as the reward.",
+    warning: "Choose carefully: only one of Florrick's three lightning weapons can be claimed.",
+  },
+  "bow-of-awareness": {
+    directions: "Buy it from Roah Moonglow inside the Shattered Sanctum.",
+    warning: "Shop before the goblin camp becomes hostile.",
+  },
+  "returning-pike": {
+    directions: "Buy it from Grat the Trader in the Goblin Camp courtyard.",
+    warning: "Shop before the goblin camp becomes hostile.",
+  },
+  "silver-sword-of-the-astral-plane": {
+    directions:
+      "For the early route, force Kith'rak Voss to drop the sword before dialogue at the Mountain Pass patrol, then retrieve it after escaping combat. The normal Act III route rewards it after showing Voss the Orphic Hammer.",
+    warning:
+      "Voss immediately leaves when combat begins and may carry a crossbow instead. Save before approaching; an early copy replaces the later quest reward.",
+  },
+  "caustic-band": {
+    directions: "Buy it from Derryth Bonecloak in the Myconid Colony.",
+    warning: "Shop before leaving the Underdark.",
+  },
+  "ring-of-flinging": {
+    directions: "Buy it from Arron beside the Silvanus statue in the Emerald Grove.",
+    warning: "Shop before the grove conflict makes Arron unavailable.",
+  },
+  "shadow-blade-ring": {
+    directions: "Find Arabella's parents in the House of Healing, tell her what happened, then speak to her after a long rest in camp.",
+    requirements: [
+      {
+        id: "save-arabella-from-kagha",
+        act: 1,
+        action: "Save Arabella from Kagha in the Emerald Grove so she can appear in the Shadow-Cursed Lands.",
+        source: "https://bg3.wiki/wiki/Save_Arabella",
+      },
+    ],
+  },
+  "luminous-armour": {
+    directions: "Open the locked and trapped opulent chest in the ruined passage above the Selûnite Outpost waypoint.",
+  },
+  "guiding-light": {
+    directions: "Reach the top of the Arcane Tower and receive the ring from Bernard by reciting the correct poetry, or loot it from him.",
+  },
+  "surgeon-s-subjugation-amulet": {
+    directions: "Defeat Malus Thorm in the House of Healing and loot the amulet from him.",
+  },
+  "marksmanship-hat": {
+    directions: "Buy it from Roah Moonglow on the main floor before the assault on Moonrise Towers.",
+    warning: "Shop before Moonrise Towers becomes hostile.",
+  },
+  "lightning-jabber": {
+    directions: "Defeat the Cursed Kuo-toa northeast of the Grand Mausoleum and loot the spear from their chief.",
+    warning: "Collect it before leaving the Shadow-Cursed Lands for Act III.",
+  },
+  "shadow-cloaked-ring": {
+    directions: "Kill the Shadow Mastiff Alpha at the cursed camp north of the ruined potter's workshop and loot the ring.",
+    warning: "Collect it before leaving the Shadow-Cursed Lands for Act III.",
+  },
+  "craterflesh-gloves": {
+    directions: "Become an Unholy Assassin at the Murder Tribunal, then buy them from the Echo of Abazigal.",
+    warning: "Becoming an Unholy Assassin requires killing Valeria during the tribunal.",
+  },
+  "helldusk-boots": {
+    directions: "Open the locked Gilded Chest in Gortash's bedroom on the top floor of Wyrm's Rock Fortress.",
+  },
+  "amulet-of-greater-health": {
+    directions: "Take it from the left pedestal in the House of Hope Archive and replace it with another item to avoid triggering the trap.",
+  },
+  rhapsody: {
+    directions: "Defeat Cazador Szarr in his dungeon and loot the dagger from him.",
+  },
+  "helmet-of-grit": {
+    directions: "Open the locked opulent chest beside Victoria's cursed corpse in Szarr Palace.",
+  },
+  "the-deathstalker-mantle": {
+    directions: "Play as The Dark Urge. Sceleritas Fel gives the cloak at camp after Alfira or Quil visits.",
+    warning: "This item is exclusive to The Dark Urge origin.",
+  },
 } as const satisfies Record<string, EquipmentGuidance>;

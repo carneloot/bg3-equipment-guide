@@ -13,6 +13,19 @@ const searchText =
 ---
 
 <article id={id} class="item-card" data-act={act} data-route-card data-equipment-card data-search={searchText}>
+  {item.effects && (
+    <button
+      class="item-card__open"
+      type="button"
+      aria-label={`View effects for ${item.name}`}
+      data-item-reference
+      data-name={item.name}
+      data-meta={`${item.rarity} · ${item.type}`}
+      data-description={item.effects}
+      data-image={item.image}
+      data-source={item.source}
+    ></button>
+  )}
   <div class="item-card__art">
     {item.image && <img src={item.image} alt="" width="144" height="144" loading="lazy" />}
     <label class="item-card__check" title={`Mark ${item.name} as collected`}>
@@ -39,21 +52,5 @@ const searchText =
     </p>
     <p class="item-card__directions">{item.directions}</p>
     {item.warning && <p class="item-card__warning">{item.warning}</p>}
-    {item.effects && (
-      <button
-        class="item-card__effects"
-        type="button"
-        data-item-reference
-        data-name={item.name}
-        data-meta={`${item.rarity} · ${item.type}`}
-        data-description={item.effects}
-        data-image={item.image}
-        data-source={item.source}
-      >
-        <span>View item effects</span>
-        <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m7 4 6 6-6 6"></path></svg>
-      </button>
-    )}
-    <a class="item-card__source" href={item.source} target="_blank" rel="noreferrer">Check source ↗</a>
   </div>
 </article>

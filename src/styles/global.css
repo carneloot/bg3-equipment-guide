@@ -799,6 +799,21 @@ h1 {
   background-color: #1b2119;
 }
 
+.item-card__open {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.item-card__open:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: -3px;
+}
+
 .item-card__art {
   position: relative;
   display: grid;
@@ -819,6 +834,7 @@ h1 {
 
 .item-card__check {
   position: absolute;
+  z-index: 2;
   bottom: 0.8rem;
   left: 50%;
   display: grid;
@@ -970,37 +986,6 @@ h1 {
   line-height: 1.35;
 }
 
-.item-card__effects {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 44px;
-  margin-bottom: 0.45rem;
-  padding: 0.55rem 0;
-  border: 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  color: var(--gold-bright);
-  font: 600 0.72rem var(--serif-display);
-  letter-spacing: 0.045em;
-  text-align: left;
-  cursor: pointer;
-}
-
-.item-card__effects svg {
-  flex: 0 0 auto;
-  width: 1rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.6;
-  transition: transform 150ms ease-out;
-}
-
 .requirement-card {
   border-color: #6c5938;
   background:
@@ -1121,10 +1106,6 @@ h1 {
 
   .item-card__source:hover {
     color: var(--gold-bright);
-  }
-
-  .item-card__effects:hover svg {
-    transform: translateX(3px);
   }
 
   .loadout-item:hover {

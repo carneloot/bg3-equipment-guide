@@ -4,6 +4,19 @@ export const equipmentGuidance = {
   "haste-helm": {
     directions: "Open the locked Moss-Covered Chest beside the Blighted Village waypoint.",
   },
+  "hellrider-s-pride": {
+    directions:
+      "Complete Investigate Kagha and expose her, then speak to Zevlor for the gloves. You can also trade with or pickpocket Zevlor.",
+    warning: "Obtain the gloves before the tieflings leave the Emerald Grove.",
+  },
+  "boots-of-aid-and-comfort": {
+    directions: "Buy them from Grat the Trader in the Goblin Camp courtyard.",
+    warning: "Shop before the goblin camp becomes hostile.",
+  },
+  "the-whispering-promise": {
+    directions: "Trade with Volo while he is in the Emerald Grove or after rescuing him from the Goblin Camp.",
+    warning: "Use the trade button during dialogue; the ring may not appear through a normal dialogue option.",
+  },
   "hide-armour-2": {
     directions: "Buy it from Grat the Trader in the Goblin Camp. He sells it regardless of character level.",
     warning: "Shop before the goblin camp becomes hostile.",
@@ -16,6 +29,29 @@ export const equipmentGuidance = {
   "phalar-aluve": {
     directions:
       "Find the sword embedded in stone near the Selûnite Outpost. Pass the Strength or Religion check to draw it; a drow can instead offer blood without a check.",
+  },
+  "bow-of-awareness": {
+    directions: "Buy it from Roah Moonglow inside the Shattered Sanctum.",
+    warning: "Shop before the goblin leaders are defeated or the camp becomes hostile.",
+  },
+  "luminous-armour": {
+    directions:
+      "At the Selûnite Outpost, enter the hidden room on the northeast side of the upper floor and open the Opulent Chest.",
+  },
+  "amulet-of-restoration": {
+    directions: "Buy it from Derryth Bonecloak in the Myconid Colony.",
+    warning: "Shop before leaving the Underdark. Derryth can sell it later in Act III if she survives.",
+  },
+  "adamantine-shield": {
+    directions:
+      "Take the Shield Mould from the skeleton east of the Grymforge waypoint, then combine it with Mithral Ore at the Adamantine Forge and defeat Grym.",
+    warning: "Only two pieces of Mithral Ore exist, so crafting the shield uses one of the two available forge items.",
+  },
+  "the-blood-of-lathander": {
+    directions:
+      "Complete the ceremonial weapon puzzle in Rosymorn Monastery to obtain the Dawnmaster's Crest. In the crèche's secret chamber, insert the crest into the final pedestal and take the mace.",
+    warning:
+      "Bring the Dawnmaster's Crest to take the mace safely. Taking it without the crest starts the monastery's destruction sequence.",
   },
   "gloves-of-the-growling-underdog": {
     directions: "Take them from Dror Ragzlin's locked treasure crates behind the iron gate in the Shattered Sanctum.",
@@ -106,6 +142,30 @@ export const equipmentGuidance = {
   "ring-of-mental-inhibition": {
     directions:
       "Open the locked chest in the ruined house just east of the Shadowed Battlefield waypoint.",
+  },
+  "luminous-gloves": {
+    directions:
+      "Open the Potter's Chest in the ruined pottery workshop southwest of the Last Light Inn, in the Ruined Battlefield.",
+  },
+  "evasive-shoes": {
+    directions: "Buy them from Mattis at Last Light Inn.",
+    warning: "Mattis must survive Act I and reach Last Light Inn. Otherwise, buy them from him in Rivington in Act III.",
+    requirements: [
+      {
+        id: "keep-mattis-and-the-tieflings-alive",
+        act: 1,
+        action:
+          "Protect the Emerald Grove and keep Mattis and the tiefling refugees alive so they can reach Last Light Inn.",
+        source: "https://bg3.wiki/wiki/Mattis",
+      },
+    ],
+  },
+  "coruscation-ring": {
+    directions:
+      "Enter the Last Light Inn cellar, pass through the cracked wall into the hidden room, and open the trapped Heavy Chest.",
+  },
+  "surgeon-s-subjugation-amulet": {
+    directions: "Defeat Malus Thorm in the House of Healing and loot the amulet from him.",
   },
   "thunderskin-cloak": {
     directions: "Buy it from Araj Oblodra on the main floor before the assault on Moonrise Towers.",
@@ -221,6 +281,16 @@ export const equipmentGuidance = {
   },
   "amulet-of-the-devout": {
     directions: "Open the main Offering Chest in the basement of Stormshore Tabernacle.",
+  },
+  "helldusk-boots": {
+    directions:
+      "Go to Gortash's quarters on the top floor of Wyrm's Rock Fortress and open the locked Gilded Chest beside his bed.",
+  },
+  "the-sacred-star": {
+    directions: "Buy it from Vicar Humbletoes inside Stormshore Tabernacle in the Lower City.",
+  },
+  "fabricated-arbalest": {
+    directions: "Defeat Enver Gortash in Wyrm's Rock Fortress and loot the crossbow from him.",
   },
   "armour-of-agility": {
     directions: "Buy it from Gloomy Fentonson at Stormshore Armoury near the Lower City Central Wall waypoint.",

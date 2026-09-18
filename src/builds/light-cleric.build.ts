@@ -1,0 +1,108 @@
+import { defineBuild } from "./define-build";
+
+export default defineBuild({
+  id: "light-cleric",
+  title: "Light Cleric",
+  description: "A written Light Cleric build and equipment checklist for Baldur's Gate 3 Patch 8.",
+  heroDescription:
+    "A radiant frontline caster that stacks Radiating Orb with Spirit Guardians while supporting the party with efficient healing.",
+  class: "Light Domain Cleric / Eldritch Knight Fighter",
+  levelSplit: "Cleric 8 / Fighter 4",
+  intro:
+    "Start as a Light Domain Cleric and unlock Spirit Guardians at level 5. Take four Fighter levels for Defence, Action Surge, utility spells, and a Wisdom feat, then finish with three more Cleric levels.",
+  levelNote:
+    "Wisdom starts at 17 so Auntie Ethel's Hair can raise it to 18. Fighter levels 6–9 add durability and action economy before the build returns to Cleric.",
+  tags: ["Radiant", "Support", "Radiating Orb"],
+  source: "https://hacktheminotaur.com/baldurs-gate-3/ultimate-bg3-light-cleric-build/",
+  sourceLabel: "Read Hack the Minotaur's source guide",
+  updated: "2026-09-18",
+  creation: [
+    { label: "Race", value: "Wood Elf" },
+    { label: "Background", value: "Folk Hero" },
+    { label: "Start", value: "Light Domain Cleric" },
+  ],
+  abilities: { STR: 8, DEX: 14, CON: 16, INT: 8, WIS: 17, CHA: 10 },
+  primaryAbility: "WIS",
+  creationNotes: [
+    { label: "Skills", text: "Take Insight and Medicine." },
+    {
+      label: "Movement",
+      text: "Wood Elf movement helps Spirit Guardians reach more enemies. Cast Longstrider after taking Eldritch Knight for another 3 m of movement.",
+    },
+    {
+      label: "Permanent bonus",
+      text: "Use Auntie Ethel's Hair for +1 WIS. The level-9 Ability Improvement then raises Wisdom from 18 to 20.",
+    },
+  ],
+  combat: [
+    "Cast Spirit Guardians with radiant damage, maintain concentration, and move through enemy groups to trigger Luminous Armour and stack Radiating Orb.",
+    "Use Mass Healing Word as a bonus action to apply Bless from The Whispering Promise, Blade Ward from Hellrider's Pride, and temporary hit points from Boots of Aid and Comfort during the early game.",
+    "Use Action Surge when a second spell or action can decide the round. Shield protects concentration, while Longstrider offsets the Cleric's limited movement.",
+    "In Act III, use The Sacred Star in melee or Illuminating Shot from the Fabricated Arbalest to apply more Radiating Orb.",
+  ],
+  levels: [
+    {
+      classLevel: "Cleric 1",
+      choice: "Light Domain; Thaumaturgy, Guidance, Sacred Flame; Command, Guiding Bolt, Sanctuary, Healing Word",
+    },
+    { classLevel: "Cleric 2", choice: "Shield of Faith" },
+    { classLevel: "Cleric 3", choice: "Spiritual Weapon" },
+    { classLevel: "Cleric 4", emphasis: "War Caster; Blade Ward, Aid" },
+    { classLevel: "Cleric 5", choice: "Spirit Guardians; replace Healing Word with Mass Healing Word" },
+    {
+      classLevel: "Cleric 5 / Fighter 1",
+      choice: "Multiclass into Fighter; Defence Fighting Style",
+      secondary: true,
+    },
+    { classLevel: "Cleric 5 / Fighter 2", choice: "Action Surge", secondary: true },
+    {
+      classLevel: "Cleric 5 / Fighter 3",
+      choice: "Eldritch Knight; Booming Blade, Fire Bolt, Shield, Thunderwave, Longstrider",
+      secondary: true,
+    },
+    {
+      classLevel: "Cleric 5 / Fighter 4",
+      emphasis: "Ability Improvement: +2 WIS; Chromatic Orb",
+      secondary: true,
+    },
+    { classLevel: "Cleric 6 / Fighter 4", choice: "Protection from Energy, Glyph of Warding" },
+    {
+      classLevel: "Cleric 7 / Fighter 4",
+      choice: "Replace Shield of Faith with Freedom of Movement and Death Ward",
+    },
+    { classLevel: "Cleric 8 / Fighter 4", emphasis: "Feat: Alert; Banishment" },
+  ],
+  loadout: [
+    { slot: "Main hand", item: "the-sacred-star" },
+    { slot: "Off-hand", item: "ketheric-s-shield" },
+    { slot: "Ranged", item: "fabricated-arbalest" },
+    { slot: "Body", item: "luminous-armour" },
+    { slot: "Hands", item: "luminous-gloves" },
+    { slot: "Feet", item: "helldusk-boots" },
+    { slot: "Amulet", item: "amulet-of-the-devout" },
+    { slot: "Ring", item: "coruscation-ring" },
+    { slot: "Ring", item: "callous-glow-ring" },
+  ],
+  equipment: [
+    "hellrider-s-pride",
+    "boots-of-aid-and-comfort",
+    "the-whispering-promise",
+    "crusher-s-ring",
+    "bow-of-awareness",
+    "luminous-armour",
+    "amulet-of-restoration",
+    "phalar-aluve",
+    "adamantine-shield",
+    "the-blood-of-lathander",
+    "luminous-gloves",
+    "evasive-shoes",
+    "coruscation-ring",
+    "surgeon-s-subjugation-amulet",
+    "callous-glow-ring",
+    "ketheric-s-shield",
+    "helldusk-boots",
+    "amulet-of-the-devout",
+    "the-sacred-star",
+    "fabricated-arbalest",
+  ],
+});

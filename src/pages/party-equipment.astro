@@ -54,7 +54,7 @@ const finalAllocation: readonly Allocation[] = [
   {
     build: "Hexblade Warlock",
     short: "HW",
-    items: ["armour-of-agility", "shadow-cloaked-ring"],
+    items: ["armour-of-agility", "the-dead-shot"],
   },
   {
     build: "Light Cleric",
@@ -69,7 +69,7 @@ const finalAllocation: readonly Allocation[] = [
   {
     build: "Giant Thrower",
     short: "GT",
-    items: ["boots-of-speed", "ring-of-flinging"],
+    items: ["hellrider-longbow", "boots-of-genial-striding"],
   },
 ] as const;
 
@@ -116,18 +116,18 @@ const finalConflicts: readonly FinalConflict[] = [
     reason: "The automatic saving throw and mobility help protect Spirit Guardians.",
     alternatives: [
       { owner: "LC", label: "Light Cleric", items: ["boots-of-striding"] },
-      { owner: "GT", label: "Giant Thrower", items: ["boots-of-speed"] },
+      { owner: "GT", label: "Giant Thrower", items: ["boots-of-genial-striding"] },
     ],
   },
   {
-    item: "shadow-cloaked-ring",
+    item: "hellrider-longbow",
     builds: ["HW", "GT"],
-    recommendationOwner: "HW",
-    recommendation: "Keep on Hexblade",
-    reason: "Darkness makes its conditional damage much more reliable for the Hexblade.",
+    recommendationOwner: "GT",
+    recommendation: "Keep on Giant Thrower",
+    reason: "The +3 Initiative helps the Thrower enter Giant's Rage and start throwing before enemies can act.",
     alternatives: [
-      { owner: "HW", label: "Hexblade Warlock", items: ["killer-s-sweetheart", "risky-ring"] },
-      { owner: "GT", label: "Giant Thrower", items: ["ring-of-flinging"] },
+      { owner: "HW", label: "Hexblade Warlock", items: ["the-dead-shot"] },
+      { owner: "GT", label: "Giant Thrower", items: ["darkfire-shortbow"] },
     ],
   },
 ] as const;
@@ -146,16 +146,17 @@ const progressionConflicts: readonly ProgressionConflict[] = [
     builds: ["HW", "LC", "GT"],
     alternatives: [
       { owner: "HW", item: "hunting-shortbow" },
-      { owner: "LC", item: "darkfire-shortbow" },
-      { owner: "GT", item: "the-joltshooter" },
+      { owner: "LC", item: "the-joltshooter" },
+      { owner: "GT", item: "darkfire-shortbow" },
     ],
   },
   {
     item: "evasive-shoes",
-    builds: ["HW", "LC"],
+    builds: ["HW", "LC", "GT"],
     alternatives: [
       { owner: "HW", item: "disintegrating-night-walkers" },
       { owner: "LC", item: "boots-of-striding" },
+      { owner: "GT", item: "boots-of-genial-striding" },
     ],
   },
   {
@@ -168,51 +169,19 @@ const progressionConflicts: readonly ProgressionConflict[] = [
     note: "Prioritise the Arcane Archer: the Hexblade has a built-in substitute, while the Archer relies on thunder damage for its Reverberation setup.",
   },
   {
-    item: "boots-of-stormy-clamour",
-    builds: ["AA", "GT"],
-    alternatives: [
-      { owner: "AA", item: "the-speedy-lightfeet" },
-      { owner: "GT", item: "boots-of-speed" },
-    ],
-  },
-  {
-    item: "gloves-of-belligerent-skies",
-    builds: ["AA", "GT"],
-    alternatives: [
-      { owner: "AA", item: "gloves-of-archery" },
-      { owner: "GT", item: "gloves-of-uninhibited-kushigo" },
-    ],
-  },
-  {
-    item: "luminous-armour",
-    builds: ["LC", "GT"],
-    alternatives: [
-      { owner: "LC", item: "armour-of-landfall" },
-      { owner: "GT", item: "enraging-heart-garb" },
-    ],
-  },
-  {
-    item: "callous-glow-ring",
-    builds: ["LC", "GT"],
-    alternatives: [
-      { owner: "LC", item: "the-whispering-promise" },
-      { owner: "GT", item: "caustic-band" },
-    ],
-  },
-  {
     item: "surgeon-s-subjugation-amulet",
     builds: ["LC", "GT"],
     alternatives: [
       { owner: "LC", item: "amulet-of-restoration" },
-      { owner: "GT", item: "killer-s-sweetheart" },
+      { owner: "GT", item: "amulet-of-misty-step" },
     ],
   },
   {
-    item: "thunderskin-cloak",
-    builds: ["AA", "GT"],
+    item: "cloak-of-protection",
+    builds: ["HW", "GT"],
     alternatives: [
-      { owner: "AA", item: "cloak-of-the-weave" },
-      { owner: "GT", item: "the-deathstalker-mantle" },
+      { owner: "HW", item: "cloak-of-displacement" },
+      { owner: "GT", item: "cloak-of-cunning-brume" },
     ],
   },
 ];
@@ -373,7 +342,7 @@ const progressionConflicts: readonly ProgressionConflict[] = [
           <p class="section-kicker">Temporary overlaps</p>
           <h2 id="progression-title">Conflicts while levelling</h2>
         </div>
-        <p>10 shared items</p>
+        <p>{progressionConflicts.length} shared items</p>
       </div>
       <p class="progression__intro">
         These items appear in more than one route, but not in both final loadouts. Pass them between characters when
@@ -847,13 +816,13 @@ const progressionConflicts: readonly ProgressionConflict[] = [
 
   .item-reference {
     display: inline-grid;
-    grid-template-columns: 2.25rem minmax(0, 1fr);
+    grid-template-columns: 2.75rem minmax(0, 1fr);
     gap: 0.55rem;
     align-items: center;
     min-width: 0;
     min-height: 44px;
-    padding: 0.2rem 0.35rem 0.2rem 0.2rem;
-    border: 1px solid transparent;
+    padding: 0 0.35rem 0 0;
+    border: 0;
     background: transparent;
     color: #cfc4b3;
     font: inherit;
@@ -863,35 +832,34 @@ const progressionConflicts: readonly ProgressionConflict[] = [
   }
 
   .item-reference img {
-    width: 2.25rem;
-    height: 2.25rem;
-    border: 1px solid var(--line);
+    width: 2.75rem;
+    height: 2.75rem;
     object-fit: contain;
     background: #17130f;
   }
 
   .item-reference--compact {
-    grid-template-columns: 2rem minmax(0, 1fr);
-    min-height: 40px;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    min-height: 44px;
     color: var(--ink-bright);
     font-size: 0.88rem;
   }
 
   .item-reference--compact img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .item-reference--title {
-    grid-template-columns: 2.5rem minmax(0, 1fr);
+    grid-template-columns: 2.75rem minmax(0, 1fr);
     padding-left: 0;
     color: var(--ink-bright);
     font: inherit;
   }
 
   .item-reference--title img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .item-reference:active {
@@ -983,9 +951,14 @@ const progressionConflicts: readonly ProgressionConflict[] = [
 
   @media (hover: hover) and (pointer: fine) {
     .item-reference:hover {
-      border-color: var(--line-bright);
       background: rgb(199 168 104 / 0.05);
       color: var(--ink-bright);
+    }
+
+    .item-reference:hover > span {
+      text-decoration: underline;
+      text-decoration-color: var(--line-bright);
+      text-underline-offset: 0.18em;
     }
 
     .item-dialog__close:hover {

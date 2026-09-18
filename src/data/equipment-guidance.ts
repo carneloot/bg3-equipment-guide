@@ -47,6 +47,11 @@ export const equipmentGuidance = {
       "Take the Shield Mould from the skeleton east of the Grymforge waypoint, then combine it with Mithral Ore at the Adamantine Forge and defeat Grym.",
     warning: "Only two pieces of Mithral Ore exist, so crafting the shield uses one of the two available forge items.",
   },
+  "adamantine-scale-mail": {
+    directions:
+      "Take the Scale Mail Mould from the ground beside the animated armour on the northeast side of Grymforge, then combine it with Mithral Ore at the Adamantine Forge and defeat Grym.",
+    warning: "Only two pieces of Mithral Ore exist, so crafting the armour uses one of the two available forge items.",
+  },
   "the-blood-of-lathander": {
     directions:
       "Complete the ceremonial weapon puzzle in Rosymorn Monastery to obtain the Dawnmaster's Crest. In the crèche's secret chamber, insert the crest into the final pedestal and take the mace.",
@@ -106,6 +111,14 @@ export const equipmentGuidance = {
   "gloves-of-dexterity": {
     directions: "Buy them from quartermaster A'jak'nir Jeera inside the crèche.",
     warning: "Shop before your choices in the crèche turn its inhabitants hostile.",
+  },
+  "diadem-of-arcane-synergy": {
+    directions: "Defeat Ardent Jhe'rezath in the Inquisitor's Chamber in Crèche Y'llek and loot the diadem from her.",
+    warning: "Take the diadem before leaving the crèche after confronting the inquisitor.",
+  },
+  "strange-conduit-ring": {
+    directions: "Open the elegant chest along the east wall of the Inquisitor's Chamber in Crèche Y'llek.",
+    warning: "Take the ring before leaving the crèche after confronting the inquisitor.",
   },
   "larethian-s-wrath": {
     directions: "Buy it from quartermaster A'jak'nir Jeera inside the crèche.",
@@ -294,6 +307,49 @@ export const equipmentGuidance = {
   },
   "armour-of-agility": {
     directions: "Buy it from Gloomy Fentonson at Stormshore Armoury near the Lower City Central Wall waypoint.",
+  },
+  belm: {
+    directions:
+      "Enter the basement of Elerrathin's Home, unlock the bookcase in the workshop, and open the opulent chest in the hidden room.",
+  },
+  "cloak-of-displacement": {
+    directions: "Buy it from Entharl Danthelon at Danthelon's Dancing Axe in Wyrm's Crossing.",
+  },
+  "legacy-of-the-masters": {
+    directions: "Buy them from Dammon at the Forge of the Nine in the Lower City.",
+    warning: "Dammon must survive both the Emerald Grove conflict and the attack on Last Light Inn.",
+    requirements: [
+      {
+        id: "keep-dammon-alive-for-legacy-of-the-masters",
+        act: 1,
+        action: "Protect the Emerald Grove and keep Dammon alive so he can travel to the Shadow-Cursed Lands.",
+        source: "https://bg3.wiki/wiki/Dammon",
+      },
+      {
+        id: "keep-dammon-alive-through-last-light-for-legacy-of-the-masters",
+        act: 2,
+        action: "Keep Dammon and the residents of Last Light Inn alive so he can reach Baldur's Gate.",
+        source: "https://bg3.wiki/wiki/Dammon",
+      },
+    ],
+  },
+  "boots-of-persistence": {
+    directions: "Buy them from Dammon at the Forge of the Nine in the Lower City.",
+    warning: "Dammon must survive both the Emerald Grove conflict and the attack on Last Light Inn.",
+    requirements: [
+      {
+        id: "keep-dammon-alive-for-boots-of-persistence",
+        act: 1,
+        action: "Protect the Emerald Grove and keep Dammon alive so he can travel to the Shadow-Cursed Lands.",
+        source: "https://bg3.wiki/wiki/Dammon",
+      },
+      {
+        id: "keep-dammon-alive-through-last-light-for-boots-of-persistence",
+        act: 2,
+        action: "Keep Dammon and the residents of Last Light Inn alive so he can reach Baldur's Gate.",
+        source: "https://bg3.wiki/wiki/Dammon",
+      },
+    ],
   },
   "shade-slayer-cloak": {
     directions:

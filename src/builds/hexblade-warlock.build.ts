@@ -1,0 +1,121 @@
+import { defineBuild } from "./define-build";
+
+export default defineBuild({
+  id: "hexblade-warlock",
+  title: "Hexblade Warlock",
+  description: "A written Hexblade Warlock build and equipment checklist for Baldur's Gate 3 Patch 8.",
+  heroDescription:
+    "A pure Warlock spellsword that combines Shadow Blade, psychic-damage riders, control spells, and powerful short-rest resources.",
+  class: "The Hexblade Warlock",
+  levelSplit: "Warlock 12",
+  intro:
+    "Stay with Hexblade Warlock for all 12 levels. Summon Shadow Blade for melee damage, use Eldritch Blast at range, and control groups with Darkness or Hunger of Hadar.",
+  levelNote: "Take Warlock at every level. Raise Charisma first, then take Savage Attacker and improve Dexterity.",
+  tags: ["Melee", "Psychic damage", "Control"],
+  source: "https://gamestegy.com/post/bg3/1586/hexblade-warlock-build",
+  sourceLabel: "Read Gamestegy's source guide",
+  updated: "2026-09-18",
+  creation: [
+    { label: "Race", value: "Wood Half-Elf" },
+    { label: "Background", value: "Guild Artisan" },
+    { label: "Start", value: "Warlock" },
+  ],
+  abilities: { STR: 8, DEX: 16, CON: 14, INT: 8, WIS: 10, CHA: 17 },
+  primaryAbility: "CHA",
+  creationNotes: [
+    { label: "Bonuses", text: "+1 DEX, +2 CHA." },
+    { label: "Skills", text: "Take Deception and Intimidation." },
+    {
+      label: "Cantrips and spells",
+      text: "Start with Booming Blade, Eldritch Blast, Shield, and Wrathful Smite.",
+    },
+    {
+      label: "Permanent bonuses",
+      text: "Use Auntie Ethel's Hair for +1 CHA and the Mirror of Loss for +2 CHA to reach 22 Charisma after the level-4 feat.",
+    },
+  ],
+  combat: [
+    "After each long rest, bind your weapon so melee attacks use Charisma. Summon Shadow Blade from level 3 onward and open melee turns with Booming Blade.",
+    "Use Eldritch Blast when you cannot reach a target. Repelling Blast can push enemies back into Darkness or Hunger of Hadar.",
+    "Keep a concentration spell active to trigger the Strange Conduit Ring. Elemental Weapon can provide that concentration and improve Shadow Blade.",
+    "Keep the Resonance Stone from the Mind Flayer Colony to make nearby creatures vulnerable to Shadow Blade and the rings' psychic damage. Its aura also gives disadvantage on mental saving throws.",
+    "Equip Belm in the off-hand and use Perfectly Balanced Strike for a bonus-action copy of your main-hand Shadow Blade attack.",
+    "Use the Drakethroat Glaive's Draconic Elemental Weapon on Shadow Blade after each long rest, then return the glaive to the party member carrying it.",
+  ],
+  levels: [
+    {
+      classLevel: "Warlock 1",
+      choice: "The Hexblade; Booming Blade, Eldritch Blast; Shield, Wrathful Smite",
+    },
+    {
+      classLevel: "Warlock 2",
+      choice: "Hellish Rebuke; Agonising Blast and Devil's Sight",
+    },
+    {
+      classLevel: "Warlock 3",
+      choice: "Pact of the Blade; Shadow Blade; replace Hellish Rebuke with Cloud of Daggers",
+    },
+    {
+      classLevel: "Warlock 4",
+      choice: "Minor Illusion, Darkness",
+      emphasis: "Feat: +2 CHA",
+    },
+    {
+      classLevel: "Warlock 5",
+      choice: "Hunger of Hadar, Repelling Blast; replace Wrathful Smite with Counterspell",
+    },
+    {
+      classLevel: "Warlock 6",
+      choice: "Branding Smite; replace Cloud of Daggers with Elemental Weapon",
+    },
+    { classLevel: "Warlock 7", choice: "Staggering Smite, Fiendish Vigour" },
+    {
+      classLevel: "Warlock 8",
+      choice: "Dimension Door or Hold Person",
+      emphasis: "Feat: Savage Attacker",
+    },
+    { classLevel: "Warlock 9", choice: "Banishing Smite, Beguiling Influence" },
+    { classLevel: "Warlock 10", choice: "Hold Monster; utility cantrip of your choice" },
+    {
+      classLevel: "Warlock 11",
+      choice: "Mystic Arcanum: Create Undead; Hold Person; replace Branding Smite with Armour of Agathys",
+    },
+    {
+      classLevel: "Warlock 12",
+      choice: "Misty Step, Lifedrinker",
+      emphasis: "Feat: +2 DEX",
+    },
+  ],
+  loadout: [
+    { slot: "Off-hand", item: "belm" },
+    { slot: "Ranged", item: "hellrider-longbow" },
+    { slot: "Head", item: "diadem-of-arcane-synergy" },
+    { slot: "Cloak", item: "cloak-of-displacement" },
+    { slot: "Body", item: "armour-of-agility" },
+    { slot: "Hands", item: "legacy-of-the-masters" },
+    { slot: "Feet", item: "boots-of-persistence" },
+    { slot: "Amulet", item: "broodmother-s-revenge" },
+    { slot: "Ring", item: "strange-conduit-ring" },
+    { slot: "Ring", item: "shadow-cloaked-ring" },
+  ],
+  equipment: [
+    "bow-of-awareness",
+    "adamantine-shield",
+    "adamantine-scale-mail",
+    "broodmother-s-revenge",
+    "diadem-of-arcane-synergy",
+    "disintegrating-night-walkers",
+    "strange-conduit-ring",
+    "cloak-of-protection",
+    "evasive-shoes",
+    "shadow-cloaked-ring",
+    "drakethroat-glaive",
+    "ketheric-s-shield",
+    "belm",
+    "hellrider-longbow",
+    "cloak-of-displacement",
+    "armour-of-agility",
+    "legacy-of-the-masters",
+    "boots-of-persistence",
+  ],
+});

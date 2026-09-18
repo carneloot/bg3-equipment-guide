@@ -6,6 +6,7 @@ import EquipmentGuide from "../../components/EquipmentGuide.astro";
 import EquipmentToolbar from "../../components/EquipmentToolbar.astro";
 import Footer from "../../components/Footer.astro";
 import Hero from "../../components/Hero.astro";
+import ItemDialog from "../../components/ItemDialog.astro";
 import { getActsForEquipment } from "../../data/equipment";
 import "../../styles/global.css";
 
@@ -51,6 +52,7 @@ const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
       <EquipmentToolbar acts={acts} totalItems={totalItems} />
       <EquipmentGuide acts={acts} />
     </main>
+    <ItemDialog />
     <Footer />
   </body>
 </html>

@@ -971,13 +971,34 @@ h1 {
 }
 
 .item-card__effects {
-  margin-bottom: 0.8rem;
-  padding-left: 0.65rem;
-  border-left: 2px solid #6e624f;
-  color: #aaa08f;
-  font-size: 0.9rem;
-  line-height: 1.35;
-  white-space: pre-line;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 0.45rem;
+  padding: 0.55rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--gold-bright);
+  font: 600 0.72rem var(--serif-display);
+  letter-spacing: 0.045em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.item-card__effects svg {
+  flex: 0 0 auto;
+  width: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  transition: transform 150ms ease-out;
 }
 
 .requirement-card {
@@ -1100,6 +1121,10 @@ h1 {
 
   .item-card__source:hover {
     color: var(--gold-bright);
+  }
+
+  .item-card__effects:hover svg {
+    transform: translateX(3px);
   }
 
   .loadout-item:hover {

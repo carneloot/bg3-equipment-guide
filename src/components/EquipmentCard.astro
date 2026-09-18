@@ -39,7 +39,21 @@ const searchText =
     </p>
     <p class="item-card__directions">{item.directions}</p>
     {item.warning && <p class="item-card__warning">{item.warning}</p>}
-    {item.effects && <p class="item-card__effects">{item.effects}</p>}
+    {item.effects && (
+      <button
+        class="item-card__effects"
+        type="button"
+        data-item-reference
+        data-name={item.name}
+        data-meta={`${item.rarity} · ${item.type}`}
+        data-description={item.effects}
+        data-image={item.image}
+        data-source={item.source}
+      >
+        <span>View item effects</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m7 4 6 6-6 6"></path></svg>
+      </button>
+    )}
     <a class="item-card__source" href={item.source} target="_blank" rel="noreferrer">Check source ↗</a>
   </div>
 </article>

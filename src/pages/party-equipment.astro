@@ -1,4 +1,6 @@
 ---
+// @ts-expect-error Astro's Vite build resolves this ESM package; this project has no bundler-mode tsconfig.
+import { ExternalLink, Skull } from "@lucide/astro";
 import ItemDialog from "../components/ItemDialog.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { acts } from "../data/equipment";
@@ -422,14 +424,13 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
               {group.buffs.map((buff) => (
                 <li>
                   <div class="buff-card__heading">
-                    <a href={buff.source} target="_blank" rel="noreferrer">{buff.name} <span aria-hidden="true">↗</span></a>
+                    <a href={buff.source} target="_blank" rel="noreferrer">
+                      {buff.name} <ExternalLink class="external-link-icon" aria-hidden="true" size={13} stroke-width={1.7} />
+                    </a>
                     <div class="buff-card__meta">
                       {buff.lostOnDeath && (
                         <span class="death-warning" title="Lost on death" aria-label="Lost on death">
-                          <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14">
-                            <path d="M12 2a9 9 0 0 0-5 16.5V22h3v-3h4v3h3v-3.5A9 9 0 0 0 12 2Z" />
-                            <path d="M9 11.5h.01M15 11.5h.01M10 15.5h4" />
-                          </svg>
+                          <Skull aria-hidden="true" size={14} stroke-width={1.7} />
                           <span class="sr-only">Lost on death</span>
                         </span>
                       )}
@@ -838,12 +839,11 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     text-underline-offset: 0.2em;
   }
 
-  .buff-card__heading > a span {
+  .buff-card__heading > a .external-link-icon {
+    display: inline-block;
     margin-left: 0.3rem;
     color: var(--gold);
-    font-family: var(--serif-body);
-    font-size: 0.72rem;
-    white-space: nowrap;
+    vertical-align: -0.1em;
   }
 
   .buff-card__meta {

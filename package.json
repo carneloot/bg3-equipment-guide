@@ -13,6 +13,7 @@
     "destroy": "alchemy destroy"
   },
   "dependencies": {
+    "@lucide/astro": "^1.47.0",
     "astro": "^7.3.2",
     "valibot": "^1.2.0"
   },

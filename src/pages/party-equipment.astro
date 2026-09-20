@@ -413,16 +413,29 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
         earned by everyone, provided each character meets the requirement.
       </p>
 
+      <div class="buff-filter" role="group" aria-label="Filter permanent bonuses by party member">
+        <span>Show bonuses for</span>
+        <div class="buff-filter__controls">
+          <button class="is-active" type="button" data-buff-filter="all" aria-pressed="true">All party</button>
+          {builds.map((build) => (
+            <button type="button" data-buff-filter={build.short} aria-pressed="false">
+              <abbr title={build.name} data-build={build.short}>{build.short}</abbr>
+              <span>{build.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div class="buff-act-grid">
         {permanentBuffs.map((group) => (
           <section class="buff-act">
             <header>
               <p>{group.act}</p>
-              <span>{group.buffs.length} bonuses</span>
+              <span data-buff-count>{group.buffs.length} bonuses</span>
             </header>
             <ol>
               {group.buffs.map((buff) => (
-                <li>
+                <li data-buff-owners={buff.owners.join(" ")}>
                   <div class="buff-card__heading">
                     <a href={buff.source} target="_blank" rel="noreferrer">
                       {buff.name} <ExternalLink class="external-link-icon" aria-hidden="true" size={13} stroke-width={1.7} />
@@ -611,6 +624,33 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
   <ItemDialog />
 </SiteLayout>
 
+<script>
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>("[data-buff-filter]");
+  const buffCards = document.querySelectorAll<HTMLElement>("[data-buff-owners]");
+
+  const filterBuffs = (owner: string) => {
+    filterButtons.forEach((button) => {
+      const isSelected = button.dataset.buffFilter === owner;
+      button.classList.toggle("is-active", isSelected);
+      button.setAttribute("aria-pressed", String(isSelected));
+    });
+
+    buffCards.forEach((card) => {
+      card.hidden = owner !== "all" && !card.dataset.buffOwners?.split(" ").includes(owner);
+    });
+
+    document.querySelectorAll<HTMLElement>(".buff-act").forEach((act) => {
+      const visibleBuffs = act.querySelectorAll<HTMLElement>("[data-buff-owners]:not([hidden])").length;
+      const count = act.querySelector<HTMLElement>("[data-buff-count]");
+      if (count) count.textContent = `${visibleBuffs} ${visibleBuffs === 1 ? "bonus" : "bonuses"}`;
+    });
+  };
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => filterBuffs(button.dataset.buffFilter ?? "all"));
+  });
+</script>
+
 <style>
   .party-plan {
     --panel: rgb(36 29 22 / 0.78);
@@ -769,6 +809,56 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     margin-bottom: 1.5rem;
   }
 
+  .buff-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    margin: 0 0 1.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .buff-filter > span {
+    color: var(--ink-muted);
+    font: 600 0.68rem var(--serif-display);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .buff-filter__controls {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .buff-filter button {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--line-bright);
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font: 600 0.68rem var(--serif-display);
+    letter-spacing: 0.06em;
+  }
+
+  .buff-filter button abbr {
+    color: var(--build-color);
+    text-decoration: none;
+  }
+
+  .buff-filter button.is-active {
+    border-color: var(--gold);
+    background: rgb(199 168 104 / 0.12);
+    color: var(--ink-bright);
+  }
+
   .buff-act-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -901,6 +991,11 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     .buff-card__heading > a:hover {
       color: var(--gold-bright);
       text-decoration-color: currentColor;
+    }
+
+    .buff-filter button:hover {
+      border-color: var(--gold);
+      color: var(--ink-bright);
     }
   }
 
@@ -1207,6 +1302,10 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
       border-left: 0;
     }
 
+    .buff-filter {
+      align-items: flex-start;
+    }
+
     .conflict-card {
       grid-template-columns: 2.5rem 1fr;
     }
@@ -1249,6 +1348,18 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     }
 
     .section-heading > p {
+      display: none;
+    }
+
+    .buff-filter {
+      display: block;
+    }
+
+    .buff-filter__controls {
+      margin-top: 0.65rem;
+    }
+
+    .buff-filter button span {
       display: none;
     }
 

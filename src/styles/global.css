@@ -1377,6 +1377,53 @@ h1 {
   text-wrap: pretty;
 }
 
+.party-plan-link {
+  display: flex;
+  gap: 2rem;
+  align-items: end;
+  justify-content: space-between;
+  width: min(1120px, calc(100% - 2rem));
+  margin: clamp(2.5rem, 6vw, 4.5rem) auto 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--line-bright);
+  background:
+    linear-gradient(120deg, rgb(199 168 104 / 0.1), transparent 52%),
+    var(--surface);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.035) inset, 0 12px 30px rgb(0 0 0 / 0.13);
+}
+
+.party-plan-link h2 {
+  margin-bottom: 0.45rem;
+  color: var(--ink-bright);
+  font: 600 clamp(1.4rem, 3vw, 2rem) / 1.15 var(--serif-display);
+}
+
+.party-plan-link p:last-child {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+
+.party-plan-link a {
+  display: inline-flex;
+  flex: none;
+  gap: 0.6rem;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--gold);
+  color: var(--ink-bright);
+  font: 600 0.7rem var(--serif-display);
+  letter-spacing: 0.055em;
+  text-decoration: none;
+}
+
+.party-plan-link a span {
+  color: var(--gold-bright);
+  font-size: 1.1rem;
+}
+
 .build-index,
 .site-footer {
   width: min(1120px, calc(100% - 2rem));
@@ -1532,6 +1579,11 @@ h1 {
     grid-column: 3;
     grid-row: 1 / 3;
   }
+
+  .party-plan-link {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 430px) {
@@ -1544,6 +1596,7 @@ h1 {
   }
 
   .index-hero__inner,
+  .party-plan-link,
   .build-index,
   .site-footer {
     width: min(100% - 1.25rem, 1120px);

@@ -4,9 +4,10 @@ import type { EquipmentItem } from "../data/equipment";
 interface Props {
   act: number;
   item: EquipmentItem;
+  isFinalLoadout: boolean;
 }
 
-const { act, item }: Props = Astro.props;
+const { act, item, isFinalLoadout }: Props = Astro.props;
 const id = item.id;
 const searchText =
   `${item.name} ${item.type} ${item.location} ${item.directions} ${item.effects} ${item.attributes}`.toLowerCase();
@@ -38,8 +39,11 @@ const searchText =
   </div>
   <div class="item-card__body">
     <p class="item-card__meta">
-      <span class="rarity-dot" data-rarity={item.rarity}></span>
-      {item.rarity} · {item.type}
+      <span class="item-card__meta-main">
+        <span class="rarity-dot" data-rarity={item.rarity}></span>
+        {item.rarity} · {item.type}
+      </span>
+      {isFinalLoadout && <span class="item-card__final-loadout">Final loadout</span>}
     </p>
     <h3>{item.name}</h3>
     {item.attributes && <p class="item-card__attributes">{item.attributes}</p>}

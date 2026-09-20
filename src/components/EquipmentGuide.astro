@@ -4,9 +4,10 @@ import ActSection from "./ActSection.astro";
 
 interface Props {
   acts: readonly Act[];
+  finalLoadoutIds: ReadonlySet<string>;
 }
 
-const { acts }: Props = Astro.props;
+const { acts, finalLoadoutIds }: Props = Astro.props;
 ---
 
 <section id="equipment" class="ledger" tabindex="-1" aria-labelledby="equipment-title">
@@ -27,7 +28,7 @@ const { acts }: Props = Astro.props;
     </p>
   </div>
 
-  {acts.map((act) => <ActSection act={act} />)}
+  {acts.map((act) => <ActSection act={act} finalLoadoutIds={finalLoadoutIds} />)}
 
   <div class="empty-state" id="empty-state" hidden>
     <p class="empty-state__sigil" aria-hidden="true">⌁</p>

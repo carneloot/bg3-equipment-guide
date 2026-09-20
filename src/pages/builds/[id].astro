@@ -20,6 +20,7 @@ interface Props {
 
 const { build }: Props = Astro.props;
 const acts = getActsForEquipment(build.equipment);
+const finalLoadoutIds = new Set(build.loadout.map(({ item }) => item));
 const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
 ---
 
@@ -50,7 +51,7 @@ const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
     <main id="guide-content">
       <BuildGuide build={build} acts={acts} />
       <EquipmentToolbar acts={acts} totalItems={totalItems} />
-      <EquipmentGuide acts={acts} />
+      <EquipmentGuide acts={acts} finalLoadoutIds={finalLoadoutIds} />
     </main>
     <ItemDialog />
     <Footer />

@@ -5,9 +5,10 @@ import EquipmentRequirementCard from "./EquipmentRequirementCard.astro";
 
 interface Props {
   act: Readonly<Act>;
+  finalLoadoutIds: ReadonlySet<string>;
 }
 
-const { act }: Props = Astro.props;
+const { act, finalLoadoutIds }: Props = Astro.props;
 const roman = ["I", "II", "III"];
 const itemLabel = `${act.items.length} ${act.items.length === 1 ? "item" : "items"}`;
 const requirementLabel = `${act.requirements.length} ${act.requirements.length === 1 ? "preparation" : "preparations"}`;
@@ -27,6 +28,8 @@ const requirementLabel = `${act.requirements.length} ${act.requirements.length =
   </header>
   <div class="item-grid">
     {act.requirements.map((requirement) => <EquipmentRequirementCard requirement={requirement} />)}
-    {act.items.map((item) => <EquipmentCard act={act.id} item={item} />)}
+    {act.items.map((item) => (
+      <EquipmentCard act={act.id} item={item} isFinalLoadout={finalLoadoutIds.has(item.id)} />
+    ))}
   </div>
 </section>

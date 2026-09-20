@@ -889,8 +889,10 @@ h1 {
 
 .item-card__meta {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.45rem;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.35rem;
   color: var(--ink-muted);
   font-family: var(--serif-display);
@@ -898,6 +900,24 @@ h1 {
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
+}
+
+.item-card__meta-main,
+.item-card__final-loadout {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.item-card__final-loadout {
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #806b42;
+  background: rgb(199 168 104 / 0.08);
+  color: var(--gold-bright);
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .rarity-dot {

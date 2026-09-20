@@ -665,6 +665,11 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
   [data-build="AA"] { --build-color: var(--rare); }
   [data-build="GT"] { --build-color: var(--red-bright); }
 
+  :global(:root[data-theme="light"]) [data-build="HW"] { --build-color: oklch(0.42 0.1 80); }
+  :global(:root[data-theme="light"]) [data-build="LC"] { --build-color: oklch(0.42 0.11 315); }
+  :global(:root[data-theme="light"]) [data-build="AA"] { --build-color: oklch(0.42 0.1 250); }
+  :global(:root[data-theme="light"]) [data-build="GT"] { --build-color: oklch(0.42 0.12 30); }
+
   .party-hero {
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
@@ -710,7 +715,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     border: 1px solid currentColor;
     border-radius: 50%;
     color: var(--build-color);
-    font: 600 0.66rem var(--serif-display);
+    font: 700 0.66rem var(--serif-display);
     letter-spacing: 0.04em;
     text-decoration: none;
     cursor: help;
@@ -850,6 +855,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
 
   .buff-filter button abbr {
     color: var(--build-color);
+    font-weight: 700;
     text-decoration: none;
   }
 
@@ -1023,7 +1029,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     display: flex;
     gap: 0.35rem;
     margin-bottom: 0.3rem;
-    font: 600 0.64rem var(--serif-display);
+    font: 700 0.64rem var(--serif-display);
     letter-spacing: 0.12em;
   }
 
@@ -1150,7 +1156,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
 
   .progression-alternative > abbr {
     color: var(--build-color);
-    font: 600 0.62rem var(--serif-display);
+    font: 700 0.62rem var(--serif-display);
     letter-spacing: 0.06em;
     text-decoration: none;
     cursor: help;
@@ -1198,6 +1204,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     color: var(--build-color);
     font-family: var(--serif-display);
     font-size: 0.72rem;
+    font-weight: 700;
     text-decoration: none;
     cursor: help;
   }

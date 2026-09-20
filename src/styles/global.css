@@ -105,7 +105,7 @@ select:focus-visible {
 }
 
 .theme-toggle {
-  position: fixed;
+  position: absolute;
   z-index: 50;
   top: 0.65rem;
   right: max(0.75rem, calc((100% - 1120px) / 2));

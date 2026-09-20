@@ -7,6 +7,7 @@ import EquipmentToolbar from "../../components/EquipmentToolbar.astro";
 import Footer from "../../components/Footer.astro";
 import Hero from "../../components/Hero.astro";
 import ItemDialog from "../../components/ItemDialog.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
 import { getActsForEquipment } from "../../data/equipment";
 import "../../styles/global.css";
 
@@ -30,6 +31,19 @@ const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#17130f" />
+    <script is:inline>
+      try {
+        const preference = localStorage.getItem("bg3-wayfarers-ledger-theme") ?? "system";
+        const theme = preference === "system"
+          ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")
+          : preference;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themePreference = preference;
+      } catch {
+        document.documentElement.dataset.theme = "dark";
+        document.documentElement.dataset.themePreference = "system";
+      }
+    </script>
     <meta name="description" content={build.description} />
     <title>{build.title} | The Wayfarer's Ledger</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,6 +56,7 @@ const totalItems = acts.reduce((total, act) => total + act.items.length, 0);
   </head>
   <body data-build-id={build.id}>
     <a class="skip-link" href="#build">Skip to build guide</a>
+    <ThemeToggle />
     <Hero
       totalItems={totalItems}
       description={build.heroDescription}

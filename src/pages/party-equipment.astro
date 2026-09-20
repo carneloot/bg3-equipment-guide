@@ -653,8 +653,8 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
 
 <style>
   .party-plan {
-    --panel: rgb(36 29 22 / 0.78);
-    --panel-strong: #292118;
+    --panel: var(--surface);
+    --panel-strong: var(--surface-raised);
     width: min(1120px, calc(100% - 2rem));
     margin: 0 auto;
     padding-bottom: 7rem;
@@ -681,7 +681,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
   .party-hero__lede {
     max-width: 52ch;
     margin: 0;
-    color: #c8bdad;
+    color: var(--ink-muted);
     font-size: clamp(1.1rem, 2vw, 1.32rem);
     line-height: 1.5;
     text-wrap: pretty;
@@ -976,7 +976,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
 
   .buff-act li > .buff-card__why {
     margin-top: 0.55rem;
-    color: #c8bdad;
+    color: var(--ink-muted);
   }
 
   .buff-card__why strong {
@@ -1157,7 +1157,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
   }
 
   .progression-alternative > span {
-    color: #c8bdad;
+    color: var(--ink-muted);
     font-size: 0.9rem;
     line-height: 1.35;
   }
@@ -1212,7 +1212,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     padding: 0 0.35rem 0 0;
     border: 0;
     background: transparent;
-    color: #cfc4b3;
+    color: var(--ink-muted);
     font: inherit;
     line-height: 1.25;
     text-align: left;
@@ -1223,7 +1223,7 @@ const permanentBuffs: readonly PermanentBuffAct[] = [
     width: 2.75rem;
     height: 2.75rem;
     object-fit: contain;
-    background: #17130f;
+    background: var(--canvas);
   }
 
   .item-reference--compact {

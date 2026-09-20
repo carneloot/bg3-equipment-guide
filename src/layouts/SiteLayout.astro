@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.astro";
 
 interface Props {
   title: string;
@@ -17,6 +18,19 @@ const { title, description, backHref, noindex = false }: Props = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#17130f" />
+    <script is:inline>
+      try {
+        const preference = localStorage.getItem("bg3-wayfarers-ledger-theme") ?? "system";
+        const theme = preference === "system"
+          ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")
+          : preference;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themePreference = preference;
+      } catch {
+        document.documentElement.dataset.theme = "dark";
+        document.documentElement.dataset.themePreference = "system";
+      }
+    </script>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
@@ -29,6 +43,7 @@ const { title, description, backHref, noindex = false }: Props = Astro.props;
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
+    <ThemeToggle />
     <header class="site-header">
       <a class="site-mark" href="/">
         <span aria-hidden="true">W</span>

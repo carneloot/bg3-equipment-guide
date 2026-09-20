@@ -1,0 +1,42 @@
+<label class="theme-toggle">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+    <circle cx="12" cy="12" r="3.5"></circle>
+    <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"></path>
+  </svg>
+  <span class="sr-only">Color theme</span>
+  <select data-theme-toggle aria-label="Color theme">
+    <option value="system">System</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</label>
+
+<script>
+  const toggle = document.querySelector<HTMLSelectElement>("[data-theme-toggle]");
+  const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  const systemTheme = () => matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  const resolveTheme = (preference: string) => preference === "system" ? systemTheme() : preference;
+
+  const applyTheme = (preference: string) => {
+    const theme = resolveTheme(preference);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.themePreference = preference;
+    themeColor?.setAttribute("content", theme === "light" ? "#f5eddd" : "#17130f");
+  };
+
+  const preference = document.documentElement.dataset.themePreference ?? "system";
+  if (toggle) toggle.value = preference;
+
+  toggle?.addEventListener("change", () => {
+    applyTheme(toggle.value);
+    try {
+      localStorage.setItem("bg3-wayfarers-ledger-theme", toggle.value);
+    } catch {
+      // Theme still changes for this page when storage is unavailable.
+    }
+  });
+
+  matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+    if (document.documentElement.dataset.themePreference === "system") applyTheme("system");
+  });
+</script>
